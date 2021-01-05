@@ -2,9 +2,10 @@ const express = require("express");
 const app = express();
 const compression = require("compression");
 const cookieSession = require("cookie-session");
+const csurf = require("csurf");
 const path = require("path");
 const secrets = require("../secrets");
-const { hash } = require("./bc");
+const { hash, compare } = require("./bc");
 const db = require("./db");
 
 app.use(compression());
@@ -17,6 +18,13 @@ app.use(
         maxAge: secrets.maxAge,
     })
 );
+
+app.use(csurf());
+
+app.use(function (req, res, next) {
+    res.cookie("mytoken", req.csrfToken());
+    next();
+});
 
 app.use(
     express.urlencoded({
@@ -37,6 +45,28 @@ app.post("/registration", (req, res) => {
         })
         .catch((err) => {
             console.log("Registration error: ", err);
+            res.json({ error: true });
+        });
+});
+
+app.post("/login", (req, res) => {
+    const { email, password } = req.body;
+    let userId;
+    db.getCredentials(email)
+        .then(({ rows }) => {
+            userId = rows[0].id;
+            return compare(password, rows[0].password);
+        })
+        .then((result) => {
+            if (result) {
+                req.session.userId = userId;
+                res.json({ success: true });
+            } else {
+                res.json({ error: true });
+            }
+        })
+        .catch((err) => {
+            console.log("Login error: ", err);
             res.json({ error: true });
         });
 });
