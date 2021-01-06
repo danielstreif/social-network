@@ -42,7 +42,7 @@ export default class Login extends Component {
     render() {
         return (
             <div>
-                <h1>Login</h1>
+                <h2>Login</h2>
                 {this.state.error && <p>Something went wrong.</p>}
                 <input
                     onChange={(e) => this.handleChange(e)}
@@ -60,6 +60,9 @@ export default class Login extends Component {
                 <button onClick={() => this.handleClick()}>Submit</button>
                 <div>
                     <Link to="/">Click here to Register!</Link>
+                </div>
+                <div>
+                    <Link to="/reset">Reset password</Link>
                 </div>
             </div>
         );

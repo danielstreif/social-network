@@ -18,3 +18,29 @@ module.exports.getCredentials = (email) => {
         email,
     ]);
 };
+
+module.exports.addResetCode = (email, resetCode) => {
+    return db.query(
+        `INSERT INTO reset_codes (email, code)
+        VALUES ($1, $2)`,
+        [email, resetCode]
+    );
+};
+
+module.exports.verifyResetCode = (resetCode, email) => {
+    return db.query(
+        `SELECT * FROM reset_codes
+  WHERE CURRENT_TIMESTAMP - created_at < INTERVAL '10 minutes'
+  AND code = $1 AND email = $2`,
+        [resetCode, email]
+    );
+};
+
+module.exports.resetPassword = (email, password) => {
+    return db.query(
+        `UPDATE users
+        SET password = $1
+        WHERE email = $2`,
+        [password, email]
+    );
+};
