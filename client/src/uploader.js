@@ -14,14 +14,14 @@ export default class Uploader extends Component {
             fileLabel: e.target.files[0].name,
         });
     }
-    handleClick(e) {
+    uploadImage(e) {
         e.preventDefault();
         const formData = new FormData();
         const self = this;
         formData.append("image", this.state.file);
         axios
             .post("/upload", formData)
-            .then(function ({ data }) {
+            .then(({ data }) => {
                 if (data.error) {
                     self.setState({ error: true });
                 }
@@ -29,7 +29,20 @@ export default class Uploader extends Component {
                     self.props.setImage(data.url);
                 }
             })
-            .catch(function (err) {
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+    deleteImage() {
+        const self = this;
+        axios
+            .get("/user/image/delete")
+            .then(({ data }) => {
+                if (data.success) {
+                    self.props.setImage("img/placeholder.png");
+                }
+            })
+            .catch((err) => {
                 console.log(err);
             });
     }
@@ -37,6 +50,7 @@ export default class Uploader extends Component {
         return (
             <div>
                 <h2>Change profile picture</h2>
+                <p onClick={() => this.props.toggleUploader()}>Close</p>
                 {this.state.error && <p>Something went wrong.</p>}
                 <form
                     name="upload-form"
@@ -56,11 +70,12 @@ export default class Uploader extends Component {
                             onChange={(e) => this.handleChange(e)}
                         />
                         <label htmlFor="image">{this.state.fileLabel}</label>
-                        <button onClick={(e) => this.handleClick(e)}>
+                        <button onClick={(e) => this.uploadImage(e)}>
                             Upload
                         </button>
                     </div>
                 </form>
+                <p onClick={() => this.deleteImage()}>Delete</p>
             </div>
         );
     }

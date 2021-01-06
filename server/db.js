@@ -58,7 +58,8 @@ module.exports.deleteProfilePic = (id) => {
     return db.query(
         `UPDATE users
         SET url = NULL
-        WHERE id = $1`,
+        WHERE id = $1
+        RETURNING url`,
         [id]
     );
 };

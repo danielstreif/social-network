@@ -50,7 +50,10 @@ export default class App extends Component {
                     imageUrl={this.state.imageUrl}
                 />
                 {this.state.uploaderIsVisible && (
-                    <Uploader setImage={(image) => this.setImage(image)} />
+                    <Uploader
+                        setImage={(image) => this.setImage(image)}
+                        toggleUploader={() => this.toggleUploader()}
+                    />
                 )}
                 <Logout />
             </div>

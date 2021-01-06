@@ -68,8 +68,7 @@ app.use(
 );
 
 app.post("/user", (req, res) => {
-    const id = req.session.userId;
-    db.getUserInfo(id)
+    db.getUserInfo(req.session.userId)
         .then(({ rows }) => {
             res.json(rows);
         })
@@ -78,11 +77,30 @@ app.post("/user", (req, res) => {
         });
 });
 
+app.get("/user/image/delete", (req, res) => {
+    const id = req.session.userId;
+    db.getUserInfo(id)
+        .then(({ rows }) => {
+            const url = rows[0].url;
+            return url;
+        })
+        .then((url) => {
+            db.deleteProfilePic(id).then(() => {
+                const filename = url.replace(s3Url, "");
+                s3.delete(filename);
+                res.json({ success: true });
+            });
+        })
+        .catch((err) => {
+            console.log(err);
+            res.json({ success: false });
+        });
+});
+
 app.post("/upload", uploader.single("image"), s3.upload, (req, res) => {
     if (req.file) {
-        const id = req.session.userId;
         const url = `${s3Url}${req.file.filename}`;
-        db.updateProfilePic(id, url)
+        db.updateProfilePic(req.session.userId, url)
             .then(() => {
                 res.json({ url: url });
             })
