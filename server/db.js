@@ -44,3 +44,29 @@ module.exports.resetPassword = (email, password) => {
         [password, email]
     );
 };
+
+module.exports.updateProfilePic = (id, url) => {
+    return db.query(
+        `UPDATE users
+        SET url = $1
+        WHERE id = $2`,
+        [url, id]
+    );
+};
+
+module.exports.deleteProfilePic = (id) => {
+    return db.query(
+        `UPDATE users
+        SET url = NULL
+        WHERE id = $1`,
+        [id]
+    );
+};
+
+module.exports.getUserInfo = (id) => {
+    return db.query(
+        `SELECT email, first, last, url FROM users
+        WHERE id = $1`,
+        [id]
+    );
+};

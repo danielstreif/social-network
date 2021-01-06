@@ -4,10 +4,14 @@ const compression = require("compression");
 const cookieSession = require("cookie-session");
 const csurf = require("csurf");
 const path = require("path");
+const multer = require("multer");
+const uidSafe = require("uid-safe");
+const cryptoRandomString = require("crypto-random-string");
 const { hash, compare } = require("./bc");
 const db = require("./db");
-const cryptoRandomString = require("crypto-random-string");
 const ses = require("./ses");
+const s3 = require("./s3");
+const { s3Url } = require("./config.json");
 
 let secrets;
 if (process.env.NODE_ENV == "production") {
@@ -15,6 +19,28 @@ if (process.env.NODE_ENV == "production") {
 } else {
     secrets = require("./secrets");
 }
+
+const diskStorage = multer.diskStorage({
+    destination: (req, file, callback) => {
+        callback(null, `${__dirname}/uploads`);
+    },
+    filename: (req, file, callback) => {
+        uidSafe(24)
+            .then((uid) => {
+                callback(null, `${uid}${path.extname(file.originalname)}`);
+            })
+            .catch((err) => {
+                callback(err);
+            });
+    },
+});
+
+const uploader = multer({
+    storage: diskStorage,
+    limits: {
+        fileSize: 2097152,
+    },
+});
 
 app.use(compression());
 
@@ -40,6 +66,34 @@ app.use(
     }),
     express.json()
 );
+
+app.post("/user", (req, res) => {
+    const id = req.session.userId;
+    db.getUserInfo(id)
+        .then(({ rows }) => {
+            res.json(rows);
+        })
+        .catch((err) => {
+            console.log("GetUserInfo error: ", err);
+        });
+});
+
+app.post("/upload", uploader.single("image"), s3.upload, (req, res) => {
+    if (req.file) {
+        const id = req.session.userId;
+        const url = `${s3Url}${req.file.filename}`;
+        db.updateProfilePic(id, url)
+            .then(() => {
+                res.json({ url: url });
+            })
+            .catch((err) => {
+                console.log("Upload error: ", err);
+                res.json({ error: true });
+            });
+    } else {
+        res.json({ error: true });
+    }
+});
 
 app.post("/password/reset/start", (req, res) => {
     const { email } = req.body;
