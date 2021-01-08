@@ -77,7 +77,7 @@ module.exports.getProfilePic = (id) => {
 
 module.exports.getUserInfo = (id) => {
     return db.query(
-        `SELECT email, first, last, url, bio FROM users
+        `SELECT id, email, first, last, url, bio FROM users
         WHERE id = $1`,
         [id]
     );

@@ -67,13 +67,32 @@ app.use(
     express.json()
 );
 
-app.get("/user", (req, res) => {
+app.get("/user/profile", (req, res) => {
     db.getUserInfo(req.session.userId)
         .then(({ rows }) => {
             res.json(rows);
         })
         .catch((err) => {
             console.log("GetUserInfo error: ", err);
+        });
+});
+
+app.get("/user/profile/:id", (req, res) => {
+    const { id } = req.params;
+    if (id == req.session.userId) {
+        return res.json({ invalid: true });
+    } 
+    db.getUserInfo(id)
+        .then(({ rows }) => {
+            if (rows.length === 0) {
+                return res.json({ error: true });
+            } else {
+                return res.json(rows);
+            }
+        })
+        .catch((err) => {
+            console.log("Get user info error: ", err);
+            res.json({ error: true });
         });
 });
 
