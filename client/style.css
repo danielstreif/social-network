@@ -13,6 +13,10 @@ a {
     color: black;
 }
 
+header {
+    display: flex;
+}
+
 .profile-pic {
     border-radius: 50px;
     height: 100%;
@@ -63,6 +67,7 @@ button {
     border: 1px solid gray;
     border-radius: 5px;
     width: 80px;
+    height: 30px;
     text-align: center;
     padding: 0 1px 0 1px;
     margin: 10px;

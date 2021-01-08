@@ -1,6 +1,6 @@
 import { Component } from "react";
 import axios from "./axios";
-import ProfilePic from "./profilepic";
+import ProfilePic from "./profilePic";
 
 export default class OtherProfile extends Component {
     constructor(props) {
@@ -15,7 +15,7 @@ export default class OtherProfile extends Component {
                 if (data.error || data.invalid) {
                     return this.props.history.push("/");
                 } else {
-                    return self.setState({ ...data[0] });
+                    return self.setState({ ...data });
                 }
             })
             .catch((err) => {

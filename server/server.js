@@ -70,7 +70,7 @@ app.use(
 app.get("/user/profile", (req, res) => {
     db.getUserInfo(req.session.userId)
         .then(({ rows }) => {
-            res.json(rows);
+            res.json(rows[0]);
         })
         .catch((err) => {
             console.log("GetUserInfo error: ", err);
@@ -87,7 +87,7 @@ app.get("/user/profile/:id", (req, res) => {
             if (rows.length === 0) {
                 return res.json({ error: true });
             } else {
-                return res.json(rows);
+                return res.json(rows[0]);
             }
         })
         .catch((err) => {

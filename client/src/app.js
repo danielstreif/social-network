@@ -1,13 +1,14 @@
 import { Component } from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Link, Redirect, Route, Switch } from "react-router-dom";
 import axios from "./axios";
 import Logout from "./logout";
 import Logo from "./logo";
-import ProfilePic from "./profilepic";
+import ProfilePic from "./profilePic";
 import Uploader from "./uploader";
 import Profile from "./profile";
-import BioEditor from "./bioeditor";
-import OtherProfile from "./otherprofile";
+import BioEditor from "./bioEditor";
+import OtherProfile from "./otherProfile";
+import NotFound from "./notFound";
 
 export default class App extends Component {
     constructor() {
@@ -21,7 +22,7 @@ export default class App extends Component {
         axios
             .get("/user/profile")
             .then(({ data }) => {
-                self.setState({ ...data[0] });
+                self.setState({ ...data });
             })
             .catch((err) => console.log(err));
     }
@@ -36,7 +37,7 @@ export default class App extends Component {
                 first={this.state.first}
                 last={this.state.last}
                 url={this.state.url}
-                toggleModal={() => this.toggleModal()}
+                onClick={() => this.toggleModal()}
             />
         );
     }
@@ -60,47 +61,52 @@ export default class App extends Component {
         });
     }
     render() {
+        if (!this.state.id) {
+            return null;
+        }
         return (
             <BrowserRouter>
                 <>
                     <header>
                         <Logo />
-                        <div className="navbar-image">
-                            {this.profilePic()}
-                        </div>
+                        <div className="navbar-image">{this.profilePic()}</div>
+                        <button>
+                            <Link to="/">Home</Link>
+                        </button>
+                        <Logout />
                     </header>
+                    <Switch>
+                        <Route
+                            exact
+                            path="/"
+                            render={() => (
+                                <Profile
+                                    first={this.state.first}
+                                    last={this.state.last}
+                                    profilePic={this.profilePic()}
+                                    bioEditor={this.bioEditor()}
+                                />
+                            )}
+                        />
+                        <Route
+                            path="/user/:id"
+                            render={(props) => (
+                                <OtherProfile
+                                    key={props.match.url}
+                                    match={props.match}
+                                    history={props.history}
+                                />
+                            )}
+                        />
 
-                    <Route
-                        exact
-                        path="/"
-                        render={() => (
-                            <Profile
-                                first={this.state.first}
-                                last={this.state.last}
-                                profilePic={this.profilePic()}
-                                bioEditor={this.bioEditor()}
-                            />
-                        )}
-                    />
-
-                    <Route
-                        path="/user/:id"
-                        render={(props) => (
-                            <OtherProfile
-                                key={props.match.url}
-                                match={props.match}
-                                history={props.history}
-                            />
-                        )}
-                    />
-
+                        <Route component={NotFound} />
+                    </Switch>
                     {this.state.uploaderIsVisible && (
                         <Uploader
                             setImage={(image) => this.setImage(image)}
                             toggleModal={() => this.toggleModal()}
                         />
                     )}
-                    <Logout />
                 </>
             </BrowserRouter>
         );
