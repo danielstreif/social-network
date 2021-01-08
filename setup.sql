@@ -8,6 +8,7 @@ CREATE TABLE users(
    email VARCHAR(255) NOT NULL UNIQUE,
    password VARCHAR(255) NOT NULL,
    url VARCHAR(255),
+   bio VARCHAR,
    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

@@ -1,13 +1,14 @@
-export default function ProfilePic({ toggleUploader, first, last, imageUrl }) {
+export default function ProfilePic(props) {
+    let imageUrl = props.url;
+    if (imageUrl === null) {
+        imageUrl = "img/placeholder.png";
+    }
     return (
-        <div>
-            <h2>Profile Picture</h2>
-            <img
-                onClick={() => toggleUploader()}
-                className="profile-pic"
-                src={imageUrl}
-                alt={`${first} ${last}`}
-            />
-        </div>
+        <img
+            onClick={props.toggleModal}
+            className="profile-pic"
+            src={imageUrl}
+            alt={`${props.first} ${props.last}`}
+        />
     );
 }

@@ -4,6 +4,8 @@ import Logout from "./logout";
 import Logo from "./logo";
 import ProfilePic from "./profilepic";
 import Uploader from "./uploader";
+import Profile from "./profile";
+import BioEditor from "./bioeditor";
 
 export default class App extends Component {
     constructor() {
@@ -13,50 +15,68 @@ export default class App extends Component {
         };
     }
     componentDidMount() {
+        const self = this;
         axios
-            .post("/user")
+            .get("/user")
             .then(({ data }) => {
-                let { first, last, url } = data[0];
-                if (!url) {
-                    url = "img/placeholder.png";
-                }
-                this.setState({
-                    first: first,
-                    last: last,
-                    imageUrl: url,
-                });
+                self.setState({ ...data[0] });
             })
             .catch((err) => console.log(err));
     }
-    toggleUploader() {
+    toggleModal() {
         this.setState({
             uploaderIsVisible: !this.state.uploaderIsVisible,
         });
     }
     setImage(newProfilePicUrl) {
         this.setState({
-            imageUrl: newProfilePicUrl,
+            url: newProfilePicUrl,
             uploaderIsVisible: false,
+        });
+    }
+    setBio(newBioText) {
+        this.setState({
+            bio: newBioText,
         });
     }
     render() {
         return (
-            <div>
-                <Logo />
-                <ProfilePic
-                    toggleUploader={() => this.toggleUploader()}
+            <>
+                <header>
+                    <Logo />
+                    <div className="navbar-image">
+                        <ProfilePic
+                            first={this.state.first}
+                            last={this.state.last}
+                            url={this.state.url}
+                            toggleModal={() => this.toggleModal()}
+                        />
+                    </div>
+                </header>
+                <Profile
                     first={this.state.first}
                     last={this.state.last}
-                    imageUrl={this.state.imageUrl}
+                    profilePic={
+                        <ProfilePic
+                            id={this.state.id}
+                            first={this.state.first}
+                            last={this.state.last}
+                            url={this.state.url}
+                            toggleModal={() => this.toggleModal()}
+                        />
+                    }
+                    bioEditor={
+                        <BioEditor bio={this.state.bio} setBio={(bio) => this.setBio(bio)} />
+                    }
                 />
                 {this.state.uploaderIsVisible && (
                     <Uploader
                         setImage={(image) => this.setImage(image)}
-                        toggleUploader={() => this.toggleUploader()}
+                        toggleModal={() => this.toggleModal()}
                     />
                 )}
                 <Logout />
-            </div>
+            </>
         );
     }
 }

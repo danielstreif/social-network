@@ -1,12 +1,70 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     background-color: ghostwhite;
     font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
         "Lucida Sans", Arial, sans-serif;
 }
 
+a {
+    text-decoration: none;
+    color: black;
+}
+
 .profile-pic {
-    width: 200px;
-    height: 200px;
+    border-radius: 50px;
+    height: 100%;
+    width: 100%;
+}
+
+.navbar-image {
+    width: 70px;
+    height: 70px;
+}
+
+.bio-image {
+    width: 100px;
+    height: 100px;
+}
+
+.modal {
+    position: absolute;
+    display: grid;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1;
+}
+
+.modal-box {
+    width: 45%;
+    position: fixed;
+    overflow: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    max-height: 80%;
+    display: grid;
+    justify-self: center;
+    background-color: ghostwhite;
+    border-radius: 5px;
+    padding: 10px;
+    z-index: 2;
+    top: 10%;
+}
+
+button {
+    font-size: medium;
+    cursor: pointer;
+    border: 1px solid gray;
+    border-radius: 5px;
+    width: 80px;
+    text-align: center;
+    padding: 0 1px 0 1px;
+    margin: 10px;
 }
 
 .input-file {

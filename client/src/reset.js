@@ -66,8 +66,8 @@ export default class Reset extends Component {
     request() {
         return (
             <div>
-                <p>Request reset</p>
-                {this.state.error && <p>Something went wrong.</p>}
+                <p>Please enter your email address to receive a reset code.</p>
+                {this.state.error && <p>No account associated with this email address.</p>}
                 <input
                     onChange={(e) => this.handleChange(e)}
                     onKeyPress={(e) => this.handleKeyPress(e)}

@@ -67,7 +67,7 @@ app.use(
     express.json()
 );
 
-app.post("/user", (req, res) => {
+app.get("/user", (req, res) => {
     db.getUserInfo(req.session.userId)
         .then(({ rows }) => {
             res.json(rows);
@@ -77,12 +77,31 @@ app.post("/user", (req, res) => {
         });
 });
 
+app.post("/user/bio/edit", (req, res) => {
+    db.updateUserBio(req.session.userId, req.body.bio)
+        .then(({ rows }) => {
+            if (rows.length === 0) {
+                return res.json({ error: true });
+            } else {
+                return res.json({ success: true });
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+            res.json({ error: true });
+        });
+});
+
 app.get("/user/image/delete", (req, res) => {
     const id = req.session.userId;
-    db.getUserInfo(id)
+    db.getProfilePic(id)
         .then(({ rows }) => {
             const url = rows[0].url;
-            return url;
+            if (url) {
+                return url;
+            } else {
+                throw new Error("No image in database");
+            }
         })
         .then((url) => {
             db.deleteProfilePic(id).then(() => {
@@ -97,26 +116,31 @@ app.get("/user/image/delete", (req, res) => {
         });
 });
 
-app.post("/upload", uploader.single("image"), s3.upload, (req, res) => {
-    if (req.file) {
-        const url = `${s3Url}${req.file.filename}`;
-        db.updateProfilePic(req.session.userId, url)
-            .then(() => {
-                res.json({ url: url });
-            })
-            .catch((err) => {
-                console.log("Upload error: ", err);
-                res.json({ error: true });
-            });
-    } else {
-        res.json({ error: true });
+app.post(
+    "/user/image/upload",
+    uploader.single("image"),
+    s3.upload,
+    (req, res) => {
+        if (req.file) {
+            const url = `${s3Url}${req.file.filename}`;
+            db.updateProfilePic(req.session.userId, url)
+                .then(() => {
+                    res.json({ url: url });
+                })
+                .catch((err) => {
+                    console.log("Upload error: ", err);
+                    res.json({ error: true });
+                });
+        } else {
+            res.json({ error: true });
+        }
     }
-});
+);
 
 app.post("/password/reset/start", (req, res) => {
     const { email } = req.body;
     const secretCode = cryptoRandomString({ length: 6 });
-    db.getCredentials(email)
+    db.checkEmailValid(email)
         .then(({ rows }) => {
             if (rows.length === 0) {
                 return res.json({ error: true });
@@ -139,7 +163,6 @@ app.post("/password/reset/verify", (req, res) => {
     const { code, email, password } = req.body;
     db.verifyResetCode(code, email)
         .then(({ rows }) => {
-            console.log(rows);
             if (rows.length === 0) {
                 return res.json({ error: true });
             }
