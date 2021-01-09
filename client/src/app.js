@@ -1,8 +1,8 @@
 import { Component } from "react";
-import { BrowserRouter, Link, Redirect, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import axios from "./axios";
-import Logout from "./logout";
-import Logo from "./logo";
+import Header from "./header";
+import Footer from "./footer";
 import ProfilePic from "./profilePic";
 import Uploader from "./uploader";
 import Profile from "./profile";
@@ -67,46 +67,42 @@ export default class App extends Component {
         return (
             <BrowserRouter>
                 <>
-                    <header>
-                        <Logo />
-                        <div className="navbar-image">{this.profilePic()}</div>
-                        <button>
-                            <Link to="/">Home</Link>
-                        </button>
-                        <Logout />
-                    </header>
-                    <Switch>
-                        <Route
-                            exact
-                            path="/"
-                            render={() => (
-                                <Profile
-                                    first={this.state.first}
-                                    last={this.state.last}
-                                    profilePic={this.profilePic()}
-                                    bioEditor={this.bioEditor()}
-                                />
-                            )}
-                        />
-                        <Route
-                            path="/user/:id"
-                            render={(props) => (
-                                <OtherProfile
-                                    key={props.match.url}
-                                    match={props.match}
-                                    history={props.history}
-                                />
-                            )}
-                        />
+                    <Header profilePic={this.profilePic()} />
+                    <div className="main-container">
+                        <Switch>
+                            <Route
+                                exact
+                                path="/"
+                                render={() => (
+                                    <Profile
+                                        first={this.state.first}
+                                        last={this.state.last}
+                                        profilePic={this.profilePic()}
+                                        bioEditor={this.bioEditor()}
+                                    />
+                                )}
+                            />
+                            <Route
+                                path="/user/:id"
+                                render={(props) => (
+                                    <OtherProfile
+                                        key={props.match.url}
+                                        match={props.match}
+                                        history={props.history}
+                                    />
+                                )}
+                            />
 
-                        <Route component={NotFound} />
-                    </Switch>
-                    {this.state.uploaderIsVisible && (
-                        <Uploader
-                            setImage={(image) => this.setImage(image)}
-                            toggleModal={() => this.toggleModal()}
-                        />
-                    )}
+                            <Route component={NotFound} />
+                        </Switch>
+                        {this.state.uploaderIsVisible && (
+                            <Uploader
+                                setImage={(image) => this.setImage(image)}
+                                toggleModal={() => this.toggleModal()}
+                            />
+                        )}
+                    </div>
+                    <Footer />
                 </>
             </BrowserRouter>
         );

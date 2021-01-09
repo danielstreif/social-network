@@ -3,6 +3,8 @@
 }
 
 body {
+    position: relative;
+    min-height: 100vh;
     background-color: ghostwhite;
     font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
         "Lucida Sans", Arial, sans-serif;
@@ -14,7 +16,31 @@ a {
 }
 
 header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.logo {
+    height: 100%;
+    display: grid;
+    margin: 0;
+    align-content: center;
+}
+
+.navbar-menu {
     display: flex;
+    flex-direction: row;
+    justify-self: end;
+}
+
+.main-container {
+    position: relative;
+    height: 100%;
+    border: 1px solid black;
+    margin-bottom: 20px;
+    padding: 10px;
 }
 
 .profile-pic {
@@ -25,8 +51,8 @@ header {
 }
 
 .navbar-image {
-    width: 70px;
-    height: 70px;
+    width: 50px;
+    height: 50px;
 }
 
 .bio-image {
@@ -91,4 +117,12 @@ button {
     text-align: center;
     overflow: hidden;
     width: 150px;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+}
+
+@media screen and (max-width: 720px) {
 }
