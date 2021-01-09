@@ -47,7 +47,7 @@ export default class BioEditor extends Component {
     emptyMode() {
         return (
             <div>
-                <button onClick={() => this.toggleTextarea()}>Add Bio</button>
+                <button className="add-button" onClick={() => this.toggleTextarea()}>Add Bio</button>
             </div>
         );
     }
@@ -55,7 +55,7 @@ export default class BioEditor extends Component {
         return (
             <div>
                 <p>{this.props.bio}</p>
-                <button onClick={() => this.toggleTextarea()}>Edit Bio</button>
+                <button className="edit-button" onClick={() => this.toggleTextarea()}>Edit Bio</button>
             </div>
         );
     }
@@ -64,11 +64,12 @@ export default class BioEditor extends Component {
             <div>
                 {this.state.error && <p>Something went wrong.</p>}
                 <textarea
+                    className="text-area"
                     onChange={(e) => this.handleChange(e)}
                     value={this.state.draftBio}
                 />
-                <button onClick={() => this.resetTextarea()}>Close</button>
-                <button onClick={() => this.handleUpload()}>Save</button>
+                <button className="save-button" onClick={() => this.handleUpload()}>Save</button>
+                <button className="close-button" onClick={() => this.resetTextarea()}>Close</button>
             </div>
         );
     }
