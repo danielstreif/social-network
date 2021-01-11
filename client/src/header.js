@@ -11,9 +11,14 @@ export default function Header(props) {
             <div className="navbar-menu">
                 <div className="navbar-image">{props.profilePic}</div>
                 <button>
+                    <Link to="/users">Search</Link>
+                </button>
+                <button>
                     <Link to="/">Home</Link>
                 </button>
-                <Logout />
+                <button>
+                    <Logout />
+                </button>
             </div>
         </header>
     );

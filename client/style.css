@@ -1,13 +1,20 @@
 * {
     box-sizing: border-box;
+    margin: 0
 }
 
 body {
-    position: relative;
-    min-height: 100vh;
     background-color: ghostwhite;
     font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
         "Lucida Sans", Arial, sans-serif;
+}
+
+main {
+    position: relative;
+    min-height: calc(100vh - 20px);
+    display: grid;
+    grid-template-rows: 60px 1fr 30px;
+    margin: 10px;
 }
 
 a {
@@ -25,7 +32,6 @@ header {
 .logo {
     height: 100%;
     display: grid;
-    margin: 0;
     align-content: center;
 }
 
@@ -37,9 +43,10 @@ header {
 
 .main-container {
     position: relative;
-    height: 100%;
+    min-height: 100%;
     border: 1px solid black;
     margin-bottom: 20px;
+    margin-right: 10px;
     padding: 10px;
 }
 
@@ -117,6 +124,26 @@ button {
     text-align: center;
     overflow: hidden;
     width: 150px;
+}
+
+.user-search {
+    margin-bottom: 20px;
+}
+
+.user-list {
+    border: 1px solid black;
+    list-style-type: none;
+    margin-bottom: 20px;
+    padding: 10px;
+    width: 500px;
+}
+
+.user-link {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    height: 100%;
+    width: 100%;
+    align-items: center;
 }
 
 footer {

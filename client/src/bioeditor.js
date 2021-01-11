@@ -6,7 +6,7 @@ export default class BioEditor extends Component {
         super(props);
         this.state = {
             textareaVisible: false,
-            draftBio: "",
+            draftBio: this.props.bio,
         };
     }
     handleChange(e) {

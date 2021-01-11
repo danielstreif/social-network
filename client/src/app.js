@@ -9,6 +9,7 @@ import Profile from "./profile";
 import BioEditor from "./bioEditor";
 import OtherProfile from "./otherProfile";
 import NotFound from "./notFound";
+import FindPeople from "./findPeople";
 
 export default class App extends Component {
     constructor() {
@@ -83,7 +84,7 @@ export default class App extends Component {
                                 )}
                             />
                             <Route
-                                path="/user/:id"
+                                path="/users/:id"
                                 render={(props) => (
                                     <OtherProfile
                                         key={props.match.url}
@@ -93,15 +94,20 @@ export default class App extends Component {
                                 )}
                             />
 
+                            <Route
+                                path="/users"
+                                render={() => <FindPeople />}
+                            />
+
                             <Route component={NotFound} />
                         </Switch>
-                        {this.state.uploaderIsVisible && (
-                            <Uploader
-                                setImage={(image) => this.setImage(image)}
-                                toggleModal={() => this.toggleModal()}
-                            />
-                        )}
                     </div>
+                    {this.state.uploaderIsVisible && (
+                        <Uploader
+                            setImage={(image) => this.setImage(image)}
+                            toggleModal={() => this.toggleModal()}
+                        />
+                    )}
                     <Footer />
                 </>
             </BrowserRouter>

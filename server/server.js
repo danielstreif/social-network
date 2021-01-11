@@ -67,21 +67,42 @@ app.use(
     express.json()
 );
 
+app.get("/user/search", (req, res) => {
+    const val = req.query.q;
+    if (val !== "undefined" && val.length !== 0) {
+        db.getMatchingUsers(val, req.session.userId)
+            .then(({ rows }) => {
+                return res.json(rows);
+            })
+            .catch((err) => {
+                console.log("Get matching users error: ", err);
+                return res.json({ error: true });
+            });
+    } else {
+        db.getRecentUsers(req.session.userId)
+            .then(({ rows }) => {
+                return res.json(rows);
+            })
+            .catch((err) => {
+                console.log("Get recent users error: ", err);
+                return res.json({ error: true });
+            });
+    }
+});
+
 app.get("/user/profile", (req, res) => {
     db.getUserInfo(req.session.userId)
         .then(({ rows }) => {
             res.json(rows[0]);
         })
-        .catch((err) => {
-            console.log("GetUserInfo error: ", err);
-        });
+        .catch((err) => console.log("GetUserInfo error: ", err));
 });
 
 app.get("/user/profile/:id", (req, res) => {
     const { id } = req.params;
     if (id == req.session.userId) {
         return res.json({ invalid: true });
-    } 
+    }
     db.getUserInfo(id)
         .then(({ rows }) => {
             if (rows.length === 0) {

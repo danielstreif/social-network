@@ -92,3 +92,20 @@ module.exports.updateUserBio = (id, bio) => {
         [bio, id]
     );
 };
+
+module.exports.getRecentUsers = (id) => {
+    return db.query(
+        `SELECT id, first, last, url FROM users
+        WHERE id != $1
+        ORDER BY id DESC LIMIT 3`,
+        [id]
+    );
+};
+
+module.exports.getMatchingUsers = (val, id) => {
+    return db.query(
+        `SELECT id, first, last, url FROM users
+        WHERE first ILIKE $1 AND id != $2`,
+        [val + "%", id]
+    );
+};
