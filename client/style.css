@@ -1,6 +1,6 @@
 * {
     box-sizing: border-box;
-    margin: 0
+    margin: 0;
 }
 
 body {
@@ -100,10 +100,14 @@ button {
     border: 1px solid gray;
     border-radius: 5px;
     width: 80px;
-    height: 30px;
+    min-height: 30px;
     text-align: center;
-    padding: 0 1px 0 1px;
+    padding: 0 10px 0 10px;
     margin: 10px;
+}
+
+.friend-button {
+    min-width: 80px;
 }
 
 .input-field {

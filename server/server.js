@@ -8,7 +8,8 @@ const multer = require("multer");
 const uidSafe = require("uid-safe");
 const cryptoRandomString = require("crypto-random-string");
 const { hash, compare } = require("./bc");
-const db = require("./db");
+const db = require("./db/db");
+const fDb = require("./db/friendships");
 const ses = require("./ses");
 const s3 = require("./s3");
 const { s3Url } = require("./config.json");
@@ -66,6 +67,59 @@ app.use(
     }),
     express.json()
 );
+
+app.post("/friendship-action/:action/:otherId", (req, res) => {
+    const { action, otherId } = req.params;
+    const userId = req.session.userId;
+
+    if (action == "Add Friend") {
+        fDb.addPendingRequest(userId, otherId)
+            .then((result) => {
+                res.json({ success: result });
+            })
+            .catch((err) => {
+                console.log("Request error: ", err);
+                res.json({ error: true });
+            });
+    } else if (action == "Accept Request") {
+        fDb.acceptPendingRequest(userId, otherId)
+            .then((result) => {
+                res.json({ success: result });
+            })
+            .catch((err) => {
+                console.log("Accept error: ", err);
+                res.json({ error: true });
+            });
+    } else if (
+        action == "Cancel Request" ||
+        action == "Decline Request" ||
+        action == "Unfriend"
+    ) {
+        fDb.deleteFriendshipStatus(userId, otherId)
+            .then((result) => {
+                res.json({ success: result });
+            })
+            .catch((err) => {
+                console.log("Delete error: ", err);
+                res.json({ error: true });
+            });
+    } else {
+        res.json({ error: true });
+    }
+});
+
+app.get("/friendship-status/:otherId", (req, res) => {
+    const { otherId } = req.params;
+    const userId = req.session.userId;
+    fDb.getFriendshipStatus(userId, otherId)
+        .then((action) => {
+            res.json({ success: action });
+        })
+        .catch((err) => {
+            res.json({ error: true });
+            console.log("Get friendship status error: ", err);
+        });
+});
 
 app.get("/user/search", (req, res) => {
     const val = req.query.q;

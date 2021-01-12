@@ -12,11 +12,12 @@ export default function FindPeople() {
         let abort;
         (async () => {
             const { data } = await axios.get(`/user/search/?q=${query}`);
-            if (data.error) {
-                return setError(true);
-            }
             if (!abort) {
-                setUser(data);
+                if (data.error) {
+                    return setError(true);
+                } else {
+                    setUser(data);
+                }
             }
         })();
         return () => {
@@ -27,7 +28,8 @@ export default function FindPeople() {
     return (
         <div>
             <h2>Search users</h2>
-            <input className="user-search"
+            <input
+                className="user-search"
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search by name"
             />
