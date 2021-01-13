@@ -1,7 +1,7 @@
 export default function Footer() {
     return (
         <footer>
-            <p>The Network</p>
+            <p>the network &#169; 2021</p>
         </footer>
     );
 }

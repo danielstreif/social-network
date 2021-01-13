@@ -1,6 +1,7 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "./axios";
+import WelcomeLogo from "./welcomeLogo";
 
 export default class Reset extends Component {
     constructor() {
@@ -65,61 +66,81 @@ export default class Reset extends Component {
 
     request() {
         return (
-            <div>
-                <p>Please enter your email address to receive a reset code.</p>
-                {this.state.error && <p>No account associated with this email address.</p>}
+            <>
+                {this.state.error && (
+                    <p className="error-message">
+                        No account associated with this email address...
+                    </p>
+                )}
                 <input
+                    className="input-field"
                     onChange={(e) => this.handleChange(e)}
                     onKeyPress={(e) => this.handleKeyPress(e)}
                     name="email"
-                    placeholder="Email"
+                    placeholder="Recovery Email"
                     type="email"
                 />
-                <button onClick={() => this.handleRequest()}>Submit</button>
-            </div>
+                <button
+                    className="welcome-button submit-button"
+                    onClick={() => this.handleRequest()}
+                >
+                    Submit
+                </button>
+            </>
         );
     }
 
     verify() {
         return (
-            <div>
-                <p>Please enter your confirmation code and a new password.</p>
-                {this.state.error && <p>Something went wrong.</p>}
+            <>
+                {this.state.error && (
+                    <p className="error-message">Something went wrong...</p>
+                )}
                 <input
+                    className="input-field"
                     onChange={(e) => this.handleChange(e)}
                     name="code"
                     placeholder="Verification Code"
                     type="text"
                 />
                 <input
+                    className="input-field"
                     onChange={(e) => this.handleChange(e)}
                     onKeyPress={(e) => this.handleKeyPress(e)}
                     name="password"
                     placeholder="New Password"
                     type="password"
                 />
-                <button onClick={() => this.handleVerification()}>
+                <button
+                    className="welcome-button submit-button"
+                    onClick={() => this.handleVerification()}
+                >
                     Submit
                 </button>
-            </div>
+            </>
         );
     }
 
     confirm() {
-        return <p>Password reset completed.</p>;
+        return <h3>Password reset completed.</h3>;
     }
 
     render() {
         return (
-            <>
-                <h2>Reset Password</h2>
-                {this.state.view === "request" && this.request()}
-                {this.state.view === "verify" && this.verify()}
-                {this.state.view === "confirm" && this.confirm()}
-                <div>
-                    <Link to="/login">Click here to Log in!</Link>
+            <div className="welcome-container">
+                <WelcomeLogo />
+                <div className="auth-container">
+                    {this.state.view === "request" && this.request()}
+                    {this.state.view === "verify" && this.verify()}
+                    {this.state.view === "confirm" && this.confirm()}
+                    <div className="border-line"></div>
+                    <Link to="/login">
+                        <button className="welcome-button switch-button">
+                            Remember Your Password?
+                        </button>
+                    </Link>
                 </div>
-            </>
+            </div>
         );
     }
 }

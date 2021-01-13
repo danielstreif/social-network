@@ -1,3 +1,3 @@
 export default function Logo() {
-    return <h1 className="logo">The Network</h1>;
+    return <h1 className="logo logo-text">the network</h1>;
 }

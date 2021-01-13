@@ -10,13 +10,13 @@ export default function Header(props) {
             </div>
             <div className="navbar-menu">
                 <div className="navbar-image">{props.profilePic}</div>
-                <button>
+                <button className="header-button">
                     <Link to="/users">Search</Link>
                 </button>
-                <button>
+                <button className="header-button">
                     <Link to="/">Home</Link>
                 </button>
-                <button>
+                <button className="header-button">
                     <Logout />
                 </button>
             </div>

@@ -69,7 +69,7 @@ export default class App extends Component {
             <BrowserRouter>
                 <>
                     <Header profilePic={this.profilePic()} />
-                    <div className="main-container">
+                    <div className="app-container">
                         <Switch>
                             <Route
                                 exact
