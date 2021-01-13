@@ -33,7 +33,8 @@ export default class Uploader extends Component {
                 console.log(err);
             });
     }
-    deleteImage() {
+    deleteImage(e) {
+        e.preventDefault();
         const self = this;
         axios
             .get("/user/image/delete")
@@ -55,9 +56,18 @@ export default class Uploader extends Component {
         return (
             <div className="modal" onClick={(e) => this.closeModal(e)}>
                 <div className="modal-box">
-                    <h2>Change profile picture</h2>
-                    <button onClick={this.props.toggleModal}>Close</button>
-                    {this.state.error && <p>Something went wrong.</p>}
+                    <div className="modal-header">
+                        <h2>Change profile picture</h2>
+                        <button
+                            className="close-button"
+                            onClick={this.props.toggleModal}
+                        >
+                            X
+                        </button>
+                    </div>
+                    {this.state.error && (
+                        <p className="error-message">Something went wrong...</p>
+                    )}
                     <form
                         name="upload-form"
                         method="POST"
@@ -65,25 +75,32 @@ export default class Uploader extends Component {
                         encType="multipart/form-data"
                         autoComplete="off"
                     >
-                        <div>
-                            File
-                            <input
-                                name="image"
-                                className="input-file"
-                                id="image"
-                                type="file"
-                                accept="image/*"
-                                onChange={(e) => this.handleChange(e)}
-                            />
-                            <label htmlFor="image">
-                                {this.state.fileLabel}
-                            </label>
-                            <button onClick={(e) => this.uploadImage(e)}>
-                                Upload
+                        <input
+                            name="image"
+                            className="input-file"
+                            id="image"
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => this.handleChange(e)}
+                        />
+                        <label className="input-field" htmlFor="image">
+                            {this.state.fileLabel}
+                        </label>
+                        <button
+                            className="welcome-button submit-button"
+                            onClick={(e) => this.uploadImage(e)}
+                        >
+                            Upload New Image
+                        </button>
+                        {this.props.imageUrl && (
+                            <button
+                                className="welcome-button switch-button"
+                                onClick={(e) => this.deleteImage(e)}
+                            >
+                                Delete Current Image
                             </button>
-                        </div>
+                        )}
                     </form>
-                    <button onClick={() => this.deleteImage()}>Delete</button>
                 </div>
             </div>
         );

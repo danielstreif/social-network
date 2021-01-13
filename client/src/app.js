@@ -106,6 +106,7 @@ export default class App extends Component {
                         <Uploader
                             setImage={(image) => this.setImage(image)}
                             toggleModal={() => this.toggleModal()}
+                            imageUrl={this.state.url}
                         />
                     )}
                     <Footer />

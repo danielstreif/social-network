@@ -5,16 +5,19 @@ import Logout from "./logout";
 export default function Header(props) {
     return (
         <header>
-            <div>
-                <Logo />
-            </div>
+            <Logo />
+            <img className="mobile-menu" src="/img/hamburgermenu.svg" alt="menu" />
             <div className="navbar-menu">
+                <button className="header-button">
+                    <Link className="header-link" to="/users">
+                        Search
+                    </Link>
+                </button>
                 <div className="navbar-image">{props.profilePic}</div>
                 <button className="header-button">
-                    <Link to="/users">Search</Link>
-                </button>
-                <button className="header-button">
-                    <Link to="/">Home</Link>
+                    <Link className="header-link" to="/">
+                        Profile
+                    </Link>
                 </button>
                 <button className="header-button">
                     <Logout />

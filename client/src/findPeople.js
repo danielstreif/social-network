@@ -29,14 +29,14 @@ export default function FindPeople() {
         <div>
             <h2>Search users</h2>
             <input
-                className="user-search"
+                className="input-field user-search"
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search by name"
             />
             {error && <p>Something went wrong.</p>}
-            <ul>
+            <ul className="user-list">
                 {users.map((user) => (
-                    <li className="user-list" key={user.id}>
+                    <li className="user-container" key={user.id}>
                         <Link className="user-link" to={`/users/${user.id}`}>
                             <div className="bio-image">
                                 <ProfilePic

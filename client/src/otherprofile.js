@@ -27,7 +27,7 @@ export default class OtherProfile extends Component {
         return (
             <div>
                 <h2>
-                    {this.state.first} {this.state.last}&apos;s Profile
+                    {this.state.first} {this.state.last}
                 </h2>
                 <div className="bio-image">
                     <ProfilePic
