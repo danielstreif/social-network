@@ -19,5 +19,5 @@ test("App eventually renders the div.", async () => {
 
     await waitForElement(() => container.querySelector("div"));
 
-    expect(container.querySelector("div").children.length).toBe(1);
+    expect(container.querySelector("div").children.length).toBe(3);
 });

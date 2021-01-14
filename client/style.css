@@ -20,14 +20,27 @@ a {
     color: black;
 }
 
+button {
+    font-size: medium;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    width: 80px;
+    text-align: center;
+    padding: 1px 15px 1px 15px;
+    margin: 10px 0 10px 0;
+}
+
 header {
     display: grid;
     grid-template-columns: 200px 1fr;
     justify-content: space-between;
-    padding: 0 50px 0 50px;
+    padding: 0 80px 0 80px;
     background-color: darkcyan;
     color: white;
     height: 50px;
+    margin-bottom: 20px;
 }
 
 .logo {
@@ -121,8 +134,12 @@ header {
 .app-container {
     position: relative;
     min-height: 100%;
-    margin-left: 50px;
-    margin-right: 50px;
+    margin-left: 80px;
+    margin-right: 80px;
+}
+
+.user-name {
+    margin-bottom: 10px;
 }
 
 .profile-pic {
@@ -138,9 +155,30 @@ header {
     cursor: pointer;
 }
 
+.bio-container {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.bio-text {
+    width: 300px;
+}
+
+.bio-textarea {
+    width: 300px;
+    height: 100px;
+    font-family: inherit;
+    font-size: medium;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 5px 12px rgba(0, 0, 0, 0.2);
+    padding: 2px;
+}
+
 .bio-image {
     width: 100px;
     height: 100px;
+    margin-bottom: 10px;
 }
 
 .modal {
@@ -186,16 +224,12 @@ header {
     color: darkgray;
 }
 
-button {
-    font-size: medium;
-    font-weight: bold;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    width: 80px;
-    text-align: center;
-    padding: 1px 15px 1px 15px;
-    margin: 10px 0 10px 0;
+.bio-button {
+    margin-right: 10px;
+    padding: 10px 15px 10px 15px;
+    color: white;
+    background-color: darkcyan;
+    width: 120px;
 }
 
 .header-button {
@@ -240,6 +274,8 @@ form {
 }
 
 .user-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     padding-left: 0;
 }
 
@@ -250,7 +286,8 @@ form {
     list-style-type: none;
     margin-bottom: 20px;
     padding: 10px;
-    width: 500px;
+    width: 25vw;
+    min-width: 280px;
 }
 
 .user-link {
@@ -261,11 +298,20 @@ form {
     align-items: center;
 }
 
+.friend-button {
+    margin-right: 10px;
+    padding: 10px 15px 10px 15px;
+    color: white;
+    background-color: darkcyan;
+    width: 120px;
+}
+
 footer {
     position: absolute;
     bottom: 0;
     font-size: small;
-    margin-left: 50px;
+    padding-left: 80px;
+    padding-right: 80px;
     margin-bottom: 5px;
 }
 
@@ -293,7 +339,19 @@ footer {
     .app-container {
         margin: 0 20px 0 20px;
     }
+    .user-search-container {
+        width: 300px;
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+    .user-list {
+        grid-template-columns: 1fr;
+    }
+    .user-container {
+        width: 300px;
+    }
     footer {
-        margin-left: 20px;
+        padding-left: 20px;
+        padding-right: 20px;
     }
 }

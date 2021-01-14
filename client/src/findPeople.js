@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "./axios";
 import ProfilePic from "./profilePic";
+import FriendButton from "./friendButton";
 
 export default function FindPeople() {
     const [query, setQuery] = useState();
@@ -26,14 +27,16 @@ export default function FindPeople() {
     }, [query]);
 
     return (
-        <div>
-            <h2>Search users</h2>
-            <input
-                className="input-field user-search"
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search by name"
-            />
-            {error && <p>Something went wrong.</p>}
+        <>
+            <div className="user-search-container">
+                <h2>Search users</h2>
+                <input
+                    className="input-field user-search"
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder="Search by name"
+                />
+                {error && <p>Something went wrong.</p>}
+            </div>
             <ul className="user-list">
                 {users.map((user) => (
                     <li className="user-container" key={user.id}>
@@ -46,11 +49,12 @@ export default function FindPeople() {
                                 />
                             </div>
                             <p>{`${user.first} ${user.last}`}</p>
+                            <FriendButton otherId={user.id} />
                         </Link>
                     </li>
                 ))}
                 {!users.length && query && <li>No Results</li>}
             </ul>
-        </div>
+        </>
     );
 }

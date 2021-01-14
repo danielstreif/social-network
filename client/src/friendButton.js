@@ -28,6 +28,7 @@ export default function FriendButton({ otherId }) {
     }, [otherId]);
 
     const handleClick = (e) => {
+        e.preventDefault();
         const action = e.target.value;
         axios
             .post(`/friendship-action/${action}/${otherId}`)

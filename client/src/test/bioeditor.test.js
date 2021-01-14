@@ -20,7 +20,7 @@ test("Clicking either the 'Add Bio' or 'Edit Bio' button causes a textarea and a
     const { container } = render(<BioEditor />);
 
     fireEvent.click(container.querySelector(".add-button"));
-    expect(container.querySelector(".text-area")).toBeTruthy();
+    expect(container.querySelector(".bio-textarea")).toBeTruthy();
     expect(container.querySelector(".save-button")).toBeTruthy();
 });
 

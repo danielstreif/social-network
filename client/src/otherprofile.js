@@ -25,8 +25,8 @@ export default class OtherProfile extends Component {
     }
     render() {
         return (
-            <div>
-                <h2>
+            <div className="profile-container">
+                <h2 className="user-name">
                     {this.state.first} {this.state.last}
                 </h2>
                 <div className="bio-image">
@@ -37,7 +37,7 @@ export default class OtherProfile extends Component {
                     />
                 </div>
                 <FriendButton otherId={this.state.id} />
-                {this.state.bio}
+                <p className="bio-text">{this.state.bio}</p>
             </div>
         );
     }

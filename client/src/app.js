@@ -66,52 +66,54 @@ export default class App extends Component {
             return null;
         }
         return (
-            <BrowserRouter>
-                <>
-                    <Header profilePic={this.profilePic()} />
-                    <div className="app-container">
-                        <Switch>
-                            <Route
-                                exact
-                                path="/"
-                                render={() => (
-                                    <Profile
-                                        first={this.state.first}
-                                        last={this.state.last}
-                                        profilePic={this.profilePic()}
-                                        bioEditor={this.bioEditor()}
-                                    />
-                                )}
-                            />
-                            <Route
-                                path="/users/:id"
-                                render={(props) => (
-                                    <OtherProfile
-                                        key={props.match.url}
-                                        match={props.match}
-                                        history={props.history}
-                                    />
-                                )}
-                            />
+            <div>
+                <BrowserRouter>
+                    <>
+                        <Header profilePic={this.profilePic()} />
+                        <div className="app-container">
+                            <Switch>
+                                <Route
+                                    exact
+                                    path="/"
+                                    render={() => (
+                                        <Profile
+                                            first={this.state.first}
+                                            last={this.state.last}
+                                            profilePic={this.profilePic()}
+                                            bioEditor={this.bioEditor()}
+                                        />
+                                    )}
+                                />
+                                <Route
+                                    path="/users/:id"
+                                    render={(props) => (
+                                        <OtherProfile
+                                            key={props.match.url}
+                                            match={props.match}
+                                            history={props.history}
+                                        />
+                                    )}
+                                />
 
-                            <Route
-                                path="/users"
-                                render={() => <FindPeople />}
-                            />
+                                <Route
+                                    path="/users"
+                                    render={() => <FindPeople />}
+                                />
 
-                            <Route component={NotFound} />
-                        </Switch>
-                    </div>
-                    {this.state.uploaderIsVisible && (
-                        <Uploader
-                            setImage={(image) => this.setImage(image)}
-                            toggleModal={() => this.toggleModal()}
-                            imageUrl={this.state.url}
-                        />
-                    )}
-                    <Footer />
-                </>
-            </BrowserRouter>
+                                <Route component={NotFound} />
+                            </Switch>
+                        </div>
+                        {this.state.uploaderIsVisible && (
+                            <Uploader
+                                setImage={(image) => this.setImage(image)}
+                                toggleModal={() => this.toggleModal()}
+                                imageUrl={this.state.url}
+                            />
+                        )}
+                        <Footer />
+                    </>
+                </BrowserRouter>
+            </div>
         );
     }
 }

@@ -47,29 +47,49 @@ export default class BioEditor extends Component {
     emptyMode() {
         return (
             <div>
-                <button className="add-button" onClick={() => this.toggleTextarea()}>Add Bio</button>
+                <button
+                    className="bio-button add-button"
+                    onClick={() => this.toggleTextarea()}
+                >
+                    Add Bio
+                </button>
             </div>
         );
     }
     displayMode() {
         return (
             <div>
-                <p>{this.props.bio}</p>
-                <button className="edit-button" onClick={() => this.toggleTextarea()}>Edit Bio</button>
+                <p className="bio-text">{this.props.bio}</p>
+                <button
+                    className="bio-button edit-button"
+                    onClick={() => this.toggleTextarea()}
+                >
+                    Edit Bio
+                </button>
             </div>
         );
     }
     editMode() {
         return (
-            <div>
+            <div className="bio-container">
                 {this.state.error && <p>Something went wrong.</p>}
                 <textarea
-                    className="text-area"
+                    className="bio-textarea"
                     onChange={(e) => this.handleChange(e)}
                     value={this.state.draftBio}
                 />
-                <button className="save-button" onClick={() => this.handleUpload()}>Save</button>
-                <button className="close-button" onClick={() => this.resetTextarea()}>Close</button>
+                <button
+                    className="bio-button save-button"
+                    onClick={() => this.handleUpload()}
+                >
+                    Save
+                </button>
+                <button
+                    className="bio-button"
+                    onClick={() => this.resetTextarea()}
+                >
+                    Close
+                </button>
             </div>
         );
     }
