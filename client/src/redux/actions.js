@@ -11,7 +11,7 @@ export async function getList() {
 
 export async function acceptRequest(otherId) {
     const { data } = await axios.post(
-        `/friendship-action/Accept Request/${otherId}`
+        `/friendship-action/Accept/${otherId}`
     );
     if (data.success) {
         return {
@@ -23,7 +23,7 @@ export async function acceptRequest(otherId) {
 
 export async function unfriend(otherId) {
     const { data } = await axios.post(
-        `/friendship-action/Cancel Request/${otherId}`
+        `/friendship-action/Cancel/${otherId}`
     );
     if (data.success) {
         return {

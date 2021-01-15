@@ -68,70 +68,65 @@ export default class App extends Component {
             return null;
         }
         return (
-            <div>
-                <BrowserRouter>
-                    <>
-                        <Header profilePic={this.profilePic()} />
-                        <div className="app-container">
-                            <Switch>
-                                <Route
-                                    exact
-                                    path="/"
-                                    render={() => (
-                                        <Profile
-                                            first={this.state.first}
-                                            last={this.state.last}
-                                            profilePic={this.profilePic()}
-                                            bioEditor={this.bioEditor()}
-                                        />
-                                    )}
-                                />
-                                <Route
-                                    path="/users/:id"
-                                    render={(props) => (
-                                        <OtherProfile
-                                            key={props.match.url}
-                                            match={props.match}
-                                            history={props.history}
-                                        />
-                                    )}
-                                />
-
-                                <Route
-                                    path="/users"
-                                    render={() => <FindPeople />}
-                                />
-
-                                <Route
-                                    path="/friends"
-                                    render={() => <Friends />}
-                                />
-
-                                <Route
-                                    path="/account"
-                                    render={() => (
-                                        <Account
-                                            first={this.state.first}
-                                            last={this.state.last}
-                                            email={this.state.email}
-                                        />
-                                    )}
-                                />
-
-                                <Route component={NotFound} />
-                            </Switch>
-                        </div>
-                        {this.state.uploaderIsVisible && (
-                            <Uploader
-                                setImage={(image) => this.setImage(image)}
-                                toggleModal={() => this.toggleModal()}
-                                imageUrl={this.state.url}
+            <BrowserRouter>
+                <>
+                    <Header profilePic={this.profilePic()} />
+                    <div className="app-container">
+                        <Switch>
+                            <Route
+                                exact
+                                path="/"
+                                render={() => (
+                                    <Profile
+                                        first={this.state.first}
+                                        last={this.state.last}
+                                        profilePic={this.profilePic()}
+                                        bioEditor={this.bioEditor()}
+                                    />
+                                )}
                             />
-                        )}
-                        <Footer />
-                    </>
-                </BrowserRouter>
-            </div>
+                            <Route
+                                path="/users/:id"
+                                render={(props) => (
+                                    <OtherProfile
+                                        key={props.match.url}
+                                        match={props.match}
+                                        history={props.history}
+                                    />
+                                )}
+                            />
+
+                            <Route
+                                path="/users"
+                                render={() => <FindPeople />}
+                            />
+
+                            <Route path="/friends" render={() => <Friends />} />
+
+                            <Route
+                                path="/account"
+                                render={() => (
+                                    <Account
+                                        first={this.state.first}
+                                        last={this.state.last}
+                                        email={this.state.email}
+                                    />
+                                )}
+                            />
+
+                            <Route component={NotFound} />
+                        </Switch>
+                    </div>
+                    {this.state.uploaderIsVisible && (
+                        <Uploader
+                            setImage={(image) => this.setImage(image)}
+                            toggleModal={() => this.toggleModal()}
+                            imageUrl={this.state.url}
+                        />
+                    )}
+                    <Footer />
+                </>
+            </BrowserRouter>
         );
     }
 }

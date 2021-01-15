@@ -93,7 +93,7 @@ app.post("/friendship-action/:action/:otherId", (req, res) => {
                 console.log("Request error: ", err);
                 res.json({ error: true });
             });
-    } else if (action == "Accept Request") {
+    } else if (action == "Accept") {
         fDb.acceptPendingRequest(userId, otherId)
             .then((result) => {
                 res.json({ success: result });
@@ -103,8 +103,8 @@ app.post("/friendship-action/:action/:otherId", (req, res) => {
                 res.json({ error: true });
             });
     } else if (
-        action == "Cancel Request" ||
-        action == "Decline Request" ||
+        action == "Cancel" ||
+        action == "Decline" ||
         action == "Unfriend"
     ) {
         fDb.deleteFriendshipStatus(userId, otherId)

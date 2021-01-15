@@ -6,8 +6,8 @@ const db = spicedPg(
 
 const friendshipStatus = Object.create({
     MAKE_REQUEST: "Add Friend",
-    CANCEL_REQUEST: "Cancel Request",
-    ACCEPT_REQUEST: "Accept Request",
+    CANCEL_REQUEST: "Cancel",
+    ACCEPT_REQUEST: "Accept",
     UNFRIEND: "Unfriend",
 });
 
