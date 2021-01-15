@@ -10,6 +10,7 @@ import BioEditor from "./bioEditor";
 import OtherProfile from "./otherProfile";
 import NotFound from "./notFound";
 import FindPeople from "./findPeople";
+import Friends from "./friends";
 
 export default class App extends Component {
     constructor() {
@@ -98,6 +99,11 @@ export default class App extends Component {
                                 <Route
                                     path="/users"
                                     render={() => <FindPeople />}
+                                />
+
+                                <Route
+                                    path="/friends"
+                                    render={() => <Friends />}
                                 />
 
                                 <Route component={NotFound} />

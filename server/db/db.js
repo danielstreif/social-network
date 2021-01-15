@@ -105,7 +105,7 @@ module.exports.getRecentUsers = (id) => {
 module.exports.getMatchingUsers = (val, id) => {
     return db.query(
         `SELECT id, first, last, url FROM users
-        WHERE first ILIKE $1 AND id != $2`,
+        WHERE first || ' ' || last ILIKE $1 AND id != $2`,
         [val + "%", id]
     );
 };

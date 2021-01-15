@@ -11,6 +11,18 @@ const friendshipStatus = Object.create({
     UNFRIEND: "Unfriend",
 });
 
+module.exports.getFriendships = (id) => {
+    return db.query(
+        `SELECT users.id, first, last, url, accepted, sender_id
+        FROM friendships JOIN users
+        ON (accepted = false AND recipient_id = $1 AND sender_id = users.id)
+        OR (accepted = true AND recipient_id = $1 AND sender_id = users.id)
+        OR (accepted = true AND sender_id = $1 AND recipient_id = users.id)
+        OR (accepted = false AND sender_id = $1 AND recipient_id = users.id)`,
+        [id]
+    );
+};
+
 module.exports.getFriendshipStatus = async (senderId, recipientId) => {
     const { rows } = await db.query(
         `SELECT * FROM friendships

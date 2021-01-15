@@ -3,7 +3,6 @@ import axios from "./axios";
 
 export default function FriendButton({ otherId }) {
     const [buttonText, setButtonText] = useState();
-    const [error, setError] = useState(false);
 
     useEffect(() => {
         if (otherId !== undefined) {
@@ -13,9 +12,6 @@ export default function FriendButton({ otherId }) {
                     `/friendship-status/${otherId}`
                 );
                 if (!abort) {
-                    if (data.error) {
-                        return setError(true);
-                    }
                     if (data.success) {
                         return setButtonText(data.success);
                     }
@@ -36,19 +32,14 @@ export default function FriendButton({ otherId }) {
                 if (data.success) {
                     setButtonText(data.success);
                 }
-                if (data.error) {
-                    setError(true);
-                }
             })
             .catch((err) => {
                 console.log(err);
-                setError(true);
             });
     };
 
     return (
-        <div>
-            {error && <p>Something went wrong.</p>}
+        <>
             <button
                 className="friend-button"
                 value={buttonText}
@@ -65,6 +56,6 @@ export default function FriendButton({ otherId }) {
                     Decline Request
                 </button>
             )}
-        </div>
+        </>
     );
 }

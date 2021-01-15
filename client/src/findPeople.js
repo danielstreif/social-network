@@ -53,7 +53,7 @@ export default function FindPeople() {
                         </Link>
                     </li>
                 ))}
-                {!users.length && query && <li>No Results</li>}
+                {!users.length && query && <p>No Results</p>}
             </ul>
         </>
     );

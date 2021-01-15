@@ -68,6 +68,18 @@ app.use(
     express.json()
 );
 
+app.get("/friendships", (req, res) => {
+    const userId = req.session.userId;
+    fDb.getFriendships(userId)
+        .then(({ rows }) => {
+            res.json({ users: rows, idSelf: userId });
+        })
+        .catch((err) => {
+            console.log("Get friendships error: ", err);
+            res.json({ error: true });
+        });
+});
+
 app.post("/friendship-action/:action/:otherId", (req, res) => {
     const { action, otherId } = req.params;
     const userId = req.session.userId;
