@@ -137,11 +137,7 @@ header {
     margin-right: 80px;
 }
 
-.user-name {
-    margin-bottom: 10px;
-}
-
-.user-group {
+.title {
     margin-bottom: 10px;
 }
 
@@ -302,7 +298,6 @@ form {
 .user-link {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    justify-items: space-between;
     height: 100%;
     width: 100%;
     align-items: center;

@@ -49,6 +49,37 @@ module.exports.resetPassword = (email, password) => {
     );
 };
 
+module.exports.deleteUser = (userId) => {
+    return db.query(
+        `DELETE FROM users 
+    WHERE id = $1`,
+        [userId]
+    );
+};
+
+module.exports.updateCredentials = (userId, first, last, email) => {
+    return db.query(
+        `UPDATE users
+        SET first = $2,
+            last = $3,
+            email = $4
+        WHERE id = $1`,
+        [userId, first, last, email]
+    );
+};
+
+module.exports.updateCredentialsPW = (userId, first, last, email, password) => {
+    return db.query(
+        `UPDATE users
+        SET first = $2,
+            last = $3,
+            email = $4,
+            password = $5
+        WHERE id = $1`,
+        [userId, first, last, email, password]
+    );
+};
+
 module.exports.updateProfilePic = (id, url) => {
     return db.query(
         `UPDATE users

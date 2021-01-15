@@ -11,6 +11,7 @@ import OtherProfile from "./otherProfile";
 import NotFound from "./notFound";
 import FindPeople from "./findPeople";
 import Friends from "./friends";
+import Account from "./account";
 
 export default class App extends Component {
     constructor() {
@@ -104,6 +105,17 @@ export default class App extends Component {
                                 <Route
                                     path="/friends"
                                     render={() => <Friends />}
+                                />
+
+                                <Route
+                                    path="/account"
+                                    render={() => (
+                                        <Account
+                                            first={this.state.first}
+                                            last={this.state.last}
+                                            email={this.state.email}
+                                        />
+                                    )}
                                 />
 
                                 <Route component={NotFound} />

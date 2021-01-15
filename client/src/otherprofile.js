@@ -26,7 +26,7 @@ export default class OtherProfile extends Component {
     render() {
         return (
             <div className="profile-container">
-                <h2 className="user-name">
+                <h2 className="title">
                     {this.state.first} {this.state.last}
                 </h2>
                 <div className="bio-image">

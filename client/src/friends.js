@@ -65,13 +65,13 @@ export default function Friends() {
 
     return (
         <>
-            <h2 className="user-group">Friends</h2>
+            <h2 className="title">Friends</h2>
             <div className="user-group-container">
                 {!friends.length && <p>No Results</p>}
                 {!!friends.length &&
                     userList(friends, [{ action: unfriend, text: "Unfriend" }])}
             </div>
-            <h2 className="user-group">Open Friend Requests</h2>
+            <h2 className="title">Open Friend Requests</h2>
             <div className="user-group-container">
                 {!requests.length && <p>No Results</p>}
                 {!!requests.length &&
@@ -80,7 +80,7 @@ export default function Friends() {
                         { action: unfriend, text: "Decline" },
                     ])}
             </div>
-            <h2 className="user-group">Pending Friend Requests</h2>
+            <h2 className="title">Pending Friend Requests</h2>
             <div className="user-group-container">
                 {!pending.length && <p>No Results</p>}
                 {!!pending.length &&

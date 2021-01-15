@@ -156,6 +156,38 @@ app.get("/user/search", (req, res) => {
     }
 });
 
+app.post("/user/profile/edit", (req, res) => {
+    const userId = req.session.userId;
+    const { first, last, email, password, deleteAcc } = req.body;
+    if (deleteAcc) {
+        db.deleteUser(userId)
+            .then(() => {
+                req.session = null;
+                res.json({ success: true });
+            })
+            .catch((err) => {
+                console.log("Account setting error: ", err);
+                res.json({ error: true });
+            });
+    } else if (password) {
+        hash(password).then((hash) => {
+            db.updateCredentialsPW(userId, first, last, email, hash)
+                .then(() => res.json({ success: true }))
+                .catch((err) => {
+                    console.log("Account setting error: ", err);
+                    res.json({ error: true });
+                });
+        });
+    } else {
+        db.updateCredentials(userId, first, last, email)
+            .then(() => res.json({ success: true }))
+            .catch((err) => {
+                console.log("Account setting error: ", err);
+                res.json({ error: true });
+            });
+    }
+});
+
 app.get("/user/profile", (req, res) => {
     db.getUserInfo(req.session.userId)
         .then(({ rows }) => {
