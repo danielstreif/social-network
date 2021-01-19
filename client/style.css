@@ -65,6 +65,17 @@ header {
     align-items: center;
 }
 
+.navbar-box {
+    width: 100%;
+    position: fixed;
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: end;
+    background-color: darkcyan;
+    padding: 15px;
+    z-index: 2;
+}
+
 .welcome-container {
     position: relative;
     display: grid;
@@ -142,7 +153,7 @@ header {
 }
 
 .user-group-container {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .profile-pic {
@@ -331,26 +342,31 @@ form {
     width: 100%;
     height: 100%;
     overflow: scroll;
+    scrollbar-width: none;
 }
 
 .chat-field {
     display: grid;
     border-radius: 8px;
     margin-bottom: 10px;
-}
-
-.user-self {
-    padding: 10px 10px 10px 50px;
-    border-radius: 8px;
-    background-color: rgba(0, 139, 139, 0.2);
-    text-align: end;
-    justify-self: end;
-    width: -moz-fit-content;
-    width: fit-content;
+    overflow: scroll;
+    scrollbar-width: none;
 }
 
 .chat-user {
     display: flex;
+}
+
+.user-self {
+    display: grid;
+    justify-items: end;
+    padding: 10px 10px 10px 50px;
+    border-radius: 8px;
+    background-color: rgba(0, 139, 139, 0.2);
+    text-align: end;
+    justify-self: flex-end;
+    width: -moz-fit-content;
+    width: fit-content;
 }
 
 .user-other {
@@ -362,8 +378,6 @@ form {
 }
 
 .user-info {
-    display: grid;
-    align-items: baseline;
     margin: 10px 5px 0 5px;
     font-size: small;
     color: gray;
@@ -398,6 +412,7 @@ footer {
 @media screen and (max-width: 720px) {
     header {
         padding: 0 20px 0 20px;
+        width: 100vw;
     }
     .welcome-container {
         margin: 0 10px 30px 10px;
@@ -417,7 +432,12 @@ footer {
         max-width: 90vw;
     }
     .app-container {
-        margin: 0 20px 0 20px;
+        width: 100vw;
+        padding: 0 20px 0 20px;
+        margin: 0;
+    }
+    .modal-box{
+        width: 80vw;
     }
     .user-search-container {
         width: 300px;
@@ -439,5 +459,6 @@ footer {
     footer {
         padding-left: 20px;
         padding-right: 20px;
+        width: 100vw;
     }
 }

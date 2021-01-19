@@ -67,13 +67,15 @@ export default function Friends() {
         <>
             <h2 className="title">Friends</h2>
             <div className="user-group-container">
-                {!friends.length && <p>No Results</p>}
+                {!friends.length && (
+                    <p>Send out friend requests to connect with people!</p>
+                )}
                 {!!friends.length &&
                     userList(friends, [{ action: unfriend, text: "Unfriend" }])}
             </div>
             <h2 className="title">Open Friend Requests</h2>
             <div className="user-group-container">
-                {!requests.length && <p>No Results</p>}
+                {!requests.length && <p>No open requests</p>}
                 {!!requests.length &&
                     userList(requests, [
                         { action: acceptRequest, text: "Accept" },
@@ -82,7 +84,7 @@ export default function Friends() {
             </div>
             <h2 className="title">Pending Friend Requests</h2>
             <div className="user-group-container">
-                {!pending.length && <p>No Results</p>}
+                {!pending.length && <p>No pending requests</p>}
                 {!!pending.length &&
                     userList(pending, [{ action: unfriend, text: "Cancel" }])}
             </div>
