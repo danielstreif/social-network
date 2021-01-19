@@ -143,7 +143,7 @@ module.exports.getMatchingUsers = (val, id) => {
 
 module.exports.getRecentChat = () => {
     return db.query(
-        `SELECT users.id AS user, first || ' ' || last AS name, url, message, chat_messages.created_at, chat_messages.id
+        `SELECT users.id AS user, first, last, url, message, chat_messages.created_at, chat_messages.id
         FROM chat_messages
         JOIN users ON chat_messages.user_id = users.id
         ORDER BY id DESC LIMIT 10`
@@ -161,7 +161,7 @@ module.exports.addChatMessage = (id, msg) => {
 
 module.exports.getNewMessage = (id) => {
     return db.query(
-        `SELECT chat_messages.created_at, chat_messages.id, message, users.id AS user, first || ' ' || last AS name, url 
+        `SELECT chat_messages.created_at, chat_messages.id, message, users.id AS user, first, last, url 
         FROM chat_messages
         JOIN users ON chat_messages.user_id = users.id
         WHERE chat_messages.id = $1`,

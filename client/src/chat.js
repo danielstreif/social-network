@@ -1,6 +1,8 @@
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { useRef, useEffect } from "react";
 import { socket } from "./socket";
+import ProfilePic from "./profilePic";
 
 export default function Chat() {
     const chatMessages = useSelector((state) => state && state.chatMessages);
@@ -35,17 +37,43 @@ export default function Chat() {
                             {message.user == userId && (
                                 <div className="user-self">
                                     <p>{message.message}</p>
-                                    <p className="user-info">
-                                        You {message.time}
-                                    </p>
+                                    <Link className="chat-user" to="/">
+                                        <span className="user-info">
+                                            <p>You</p>
+                                            <p>{message.time}</p>
+                                        </span>
+
+                                        <div className="navbar-image">
+                                            <ProfilePic
+                                                first={message.first}
+                                                last={message.last}
+                                                url={message.url}
+                                            />
+                                        </div>
+                                    </Link>
                                 </div>
                             )}
                             {message.user != userId && (
                                 <div className="user-other">
                                     <p>{message.message}</p>
-                                    <p className="user-info">
-                                        {message.name} {message.time}
-                                    </p>
+                                    <Link
+                                        className="chat-user"
+                                        to={`/users/${message.user}`}
+                                    >
+                                        <div className="navbar-image">
+                                            <ProfilePic
+                                                first={message.first}
+                                                last={message.last}
+                                                url={message.url}
+                                            />
+                                        </div>
+                                        <span className="user-info">
+                                            <p>
+                                                {message.first} {message.last}
+                                            </p>
+                                            <p>{message.time}</p>
+                                        </span>
+                                    </Link>
                                 </div>
                             )}
                         </li>
