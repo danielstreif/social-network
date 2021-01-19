@@ -14,10 +14,10 @@ axios.get.mockResolvedValue({
     },
 });
 
-test("App eventually renders the div.", async () => {
+test("App eventually renders the app-container div.", async () => {
     const { container } = render(<App />);
 
     await waitForElement(() => container.querySelector("div"));
 
-    expect(container.querySelector("div").children.length).toBe(3);
+    expect(container.querySelector(".app-container").children.length).toBe(1);
 });

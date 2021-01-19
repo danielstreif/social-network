@@ -12,6 +12,7 @@ import NotFound from "./notFound";
 import FindPeople from "./findPeople";
 import Friends from "./friends";
 import Account from "./account";
+import Chat from "./chat";
 
 export default class App extends Component {
     constructor() {
@@ -102,6 +103,8 @@ export default class App extends Component {
                             />
 
                             <Route path="/friends" render={() => <Friends />} />
+
+                            <Route path="/chat" render={() => <Chat />} />
 
                             <Route
                                 path="/account"

@@ -13,6 +13,11 @@ const fDb = require("./db/friendships");
 const ses = require("./ses");
 const s3 = require("./s3");
 const { s3Url } = require("./config.json");
+const server = require("http").Server(app);
+const io = require("socket.io")(server, {
+    allowRequest: (req, callback) =>
+        callback(null, req.headers.referer.startsWith("http://localhost:3000")),
+});
 
 let secrets;
 if (process.env.NODE_ENV == "production") {
@@ -47,12 +52,15 @@ app.use(compression());
 
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
 
-app.use(
-    cookieSession({
-        secret: secrets.sessionSecret,
-        maxAge: secrets.maxAge,
-    })
-);
+const cookieSessionMiddleware = cookieSession({
+    secret: secrets.sessionSecret,
+    maxAge: secrets.maxAge,
+});
+
+app.use(cookieSessionMiddleware);
+io.use(function (socket, next) {
+    cookieSessionMiddleware(socket.request, socket.request.res, next);
+});
 
 app.use(csurf());
 
@@ -377,6 +385,44 @@ app.get("*", function (req, res) {
     }
 });
 
-app.listen(process.env.PORT || 3001, function () {
+server.listen(process.env.PORT || 3001, function () {
     console.log("I'm listening.");
+});
+
+io.on("connection", (socket) => {
+    if (!socket.request.session.userId) {
+        return socket.disconnect(true);
+    }
+    const userId = socket.request.session.userId;
+    if (userId) {
+        db.getRecentChat()
+            .then(({ rows }) => {
+                for (let i in rows) {
+                    rows[i].time = rows[i].created_at.toLocaleString();
+                }
+                const result = {
+                    result: rows.sort((a, b) => {
+                        return a.id - b.id;
+                    }),
+                };
+                socket.emit("get messages", result, userId);
+            })
+            .catch((err) => console.log("Get recent messages error: ", err));
+    }
+
+    socket.on("post message", (message) => {
+        db.addChatMessage(userId, message)
+            .then(({ rows }) => {
+                db.getNewMessage(rows[0].id)
+                    .then(({ rows }) => {
+                        const newMessage = rows[0];
+                        newMessage.time = newMessage.created_at.toLocaleString();
+                        io.emit("new message and user", newMessage);
+                    })
+                    .catch((err) =>
+                        console.log("Get new message error: ", err)
+                    );
+            })
+            .catch((err) => console.log("Post message error: ", err));
+    });
 });

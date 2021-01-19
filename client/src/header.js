@@ -35,6 +35,11 @@ export default function Header(props) {
                         </Link>
                     </button>
                     <button className="header-button">
+                        <Link className="header-link" to="/chat">
+                            Messages
+                        </Link>
+                    </button>
+                    <button className="header-button">
                         <Logout />
                     </button>
                 </div>
