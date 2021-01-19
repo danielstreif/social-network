@@ -31,7 +31,7 @@ CREATE TABLE friendships (
 
 CREATE TABLE chat_messages (
    id SERIAL PRIMARY KEY,
-   user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+   user_id INT REFERENCES users(id) ON DELETE SET NULL,
    message VARCHAR NOT NULL,
    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

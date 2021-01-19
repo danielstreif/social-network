@@ -169,7 +169,9 @@ app.post("/user/profile/edit", (req, res) => {
     const { first, last, email, password, deleteAcc } = req.body;
     if (deleteAcc) {
         db.deleteUser(userId)
-            .then(() => {
+            .then(({ rows }) => {
+                const filename = rows[0].url.replace(s3Url, "");
+                s3.delete(filename);
                 req.session = null;
                 res.json({ success: true });
             })
@@ -270,7 +272,11 @@ app.post(
         if (req.file) {
             const url = `${s3Url}${req.file.filename}`;
             db.updateProfilePic(req.session.userId, url)
-                .then(() => {
+                .then(({ rows }) => {
+                    if (rows[0].url) {
+                        const filename = rows[0].url.replace(s3Url, "");
+                        s3.delete(filename);
+                    }
                     res.json({ url: url });
                 })
                 .catch((err) => {

@@ -52,7 +52,8 @@ module.exports.resetPassword = (email, password) => {
 module.exports.deleteUser = (userId) => {
     return db.query(
         `DELETE FROM users 
-    WHERE id = $1`,
+        WHERE id = $1
+        RETURNING url`,
         [userId]
     );
 };
@@ -84,7 +85,8 @@ module.exports.updateProfilePic = (id, url) => {
     return db.query(
         `UPDATE users
         SET url = $1
-        WHERE id = $2`,
+        WHERE id = $2
+        RETURNING (SELECT url FROM users WHERE id = $2)`,
         [url, id]
     );
 };
@@ -145,7 +147,7 @@ module.exports.getRecentChat = () => {
     return db.query(
         `SELECT users.id AS user, first, last, url, message, chat_messages.created_at, chat_messages.id
         FROM chat_messages
-        JOIN users ON chat_messages.user_id = users.id
+        LEFT JOIN users ON chat_messages.user_id = users.id
         ORDER BY id DESC LIMIT 10`
     );
 };
@@ -163,7 +165,7 @@ module.exports.getNewMessage = (id) => {
     return db.query(
         `SELECT chat_messages.created_at, chat_messages.id, message, users.id AS user, first, last, url 
         FROM chat_messages
-        JOIN users ON chat_messages.user_id = users.id
+        LEFT JOIN users ON chat_messages.user_id = users.id
         WHERE chat_messages.id = $1`,
         [id]
     );
