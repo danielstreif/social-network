@@ -59,7 +59,7 @@ export default class BioEditor extends Component {
     displayMode() {
         return (
             <div className="bio-container">
-                <p className="bio-text">{this.props.bio}</p>
+                <p className="bio-text standard-text">{this.props.bio}</p>
                 <button
                     className="standard-button edit-button"
                     onClick={() => this.toggleTextarea()}

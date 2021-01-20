@@ -42,6 +42,10 @@ header {
     margin-bottom: 20px;
 }
 
+.standard-text {
+    font-size: 15px;
+}
+
 .logo {
     color: white !important;
     margin: 0 !important;
@@ -125,6 +129,7 @@ header {
     color: lightcoral;
     margin-bottom: 20px;
     text-align: start;
+    font-size: 15px;
 }
 
 .password-reset {
@@ -182,12 +187,35 @@ header {
     width: 100%;
 }
 
+.modal-img-box {
+    width: 60%;
+    max-width: 800px;
+    position: fixed;
+    overflow: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    max-height: 80%;
+    display: grid;
+    justify-self: center;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 5px 12px rgba(0, 0, 0, 0.2);
+    background-color: white;
+    padding: 5px 15px 15px 15px;
+    z-index: 2;
+    top: 10%;
+}
+
+.modal-close {
+    justify-self: end;
+}
+
 .post-container {
     border-radius: 8px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 5px 12px rgba(0, 0, 0, 0.2);
     background-color: white;
     padding: 15px;
     margin-bottom: 20px;
+    cursor: pointer;
 }
 
 .bio-text {
@@ -258,11 +286,16 @@ header {
     padding: 0 5px 0 5px;
     background-color: rgba(0, 0, 0, 0);
     color: darkgray;
+    border: 0.5px solid white;
+}
+
+.close-button:hover {
+    border: 0.5px solid darkgray;
 }
 
 .standard-button {
     margin-right: 10px;
-    padding: 10px 15px 10px 15px;
+    padding: 8px 15px 8px 15px;
     color: white;
     background-color: darkcyan;
     width: -moz-fit-content;
@@ -283,8 +316,9 @@ header {
     border: 1px solid lightgray;
     padding: 10px;
     margin-bottom: 10px;
-    font-size: medium;
+    font-size: 15px;
     height: 43px;
+    width: 100%;
 }
 
 form {
@@ -312,6 +346,8 @@ form {
 
 .user-search {
     margin-bottom: 20px;
+    width: 25vw;
+    min-width: 270px;
 }
 
 .user-list {
@@ -344,7 +380,7 @@ form {
     width: -moz-fit-content;
     width: fit-content;
     margin-right: 10px;
-    padding: 10px 15px 10px 15px;
+    padding: 8px 15px 8px 15px;
     color: white;
     background-color: darkcyan;
 }
@@ -482,6 +518,9 @@ footer {
     }
     .user-list {
         grid-template-columns: 1fr;
+    }
+    .user-search {
+        width: 300px;
     }
     .user-container {
         width: 300px;

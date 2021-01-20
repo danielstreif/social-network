@@ -13,7 +13,7 @@ export default function Profile(props) {
                 {props.bioEditor}
 
                 <Link to="/account">
-                    <button className="welcome-button submit-button">
+                    <button className="standard-button">
                         Account Settings
                     </button>
                 </Link>

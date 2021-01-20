@@ -99,22 +99,26 @@ export default function Account({ first, last, email }) {
                     placeholder="Change Password"
                     type="password"
                 />
-                <button
-                    className="welcome-button submit-button"
-                    onClick={handleSubmit}
-                >
-                    Submit Changes
-                </button>
-                <button
-                    className="welcome-button switch-button"
-                    onClick={toggleDelete}
-                >
-                    Delete Account
-                </button>
+                <div>
+                    <button
+                        className="standard-button submit-button"
+                        onClick={handleSubmit}
+                    >
+                        Submit Changes
+                    </button>
+                    <Link to="/">
+                        <button className="standard-button">Cancel</button>
+                    </Link>
+                </div>
+                <div>
+                    <button
+                        className="standard-button switch-button"
+                        onClick={toggleDelete}
+                    >
+                        Delete Account
+                    </button>
+                </div>
             </div>
-            <Link to="/">
-                <button className="welcome-button submit-button">Done</button>
-            </Link>
         </>
     );
 }
