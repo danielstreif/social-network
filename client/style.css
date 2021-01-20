@@ -196,6 +196,12 @@ header {
     width: 250px;
 }
 
+.bio-container {
+    width: 250px;
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
 .bio-textarea {
     height: 100px;
     font-family: inherit;

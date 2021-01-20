@@ -5,8 +5,8 @@ import useStatefulFields from "./hooks/useStatefulFields";
 
 export default function Wall({ edit, id }) {
     const [values, handleChange] = useStatefulFields();
-    const [file, setFile] = useState();
-    const [fileLabel, setFileLabel] = useState("Add a photo to your wall");
+    const [imgFile, setImgFile] = useState();
+    const [imgFileLabel, setImgFileLabel] = useState("Add a photo to your wall");
     const dispatch = useDispatch();
     const wallPosts = useSelector((state) => state.wallPosts);
     const error = useSelector((state) => state.error);
@@ -20,14 +20,14 @@ export default function Wall({ edit, id }) {
     }
 
     const handleFileChange = (e) => {
-        setFile(e.target.files[0]);
-        setFileLabel(e.target.files[0].name);
+        setImgFile(e.target.files[0]);
+        setImgFileLabel(e.target.files[0].name);
     };
 
     const uploadPost = (e) => {
         e.preventDefault();
         const formData = new FormData();
-        formData.append("image", file);
+        formData.append("image", imgFile);
         formData.append("description", values.description);
         dispatch(addWallPost(formData));
     };
@@ -42,15 +42,15 @@ export default function Wall({ edit, id }) {
             autoComplete="off"
         >
             <input
-                name="image"
+                name="wall-image"
                 className="input-file"
-                id="image"
+                id="wall-image"
                 type="file"
                 accept="image/*"
                 onChange={handleFileChange}
             />
-            <label className="input-field" htmlFor="image">
-                {fileLabel}
+            <label className="input-field" htmlFor="wall-image">
+                {imgFileLabel}
             </label>
             <input
                 className="input-field"

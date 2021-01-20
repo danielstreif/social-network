@@ -122,7 +122,7 @@ export default class Reset extends Component {
     }
 
     confirm() {
-        return <h3>Password reset completed.</h3>;
+        return <p>Password reset completed</p>;
     }
 
     render() {
