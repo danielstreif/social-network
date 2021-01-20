@@ -1,10 +1,26 @@
 import axios from "../axios";
 
+export async function getWallPosts(id) {
+    const { data } = await axios.get(`/user/wall/${id}`);
+    return {
+        type: "GET_POSTS",
+        wallPosts: data.success,
+    };
+}
+
+export async function addWallPost(formData) {
+    const { data } = await axios.post(`/user/wall/post`, formData);
+    return {
+        type: "ADD_POST",
+        newWallPost: data.success,
+    };
+}
+
 export function getMessages({ result }, id) {
     return {
         type: "GET_MESSAGES",
         chatMessages: result,
-        userId: id
+        userId: id,
     };
 }
 

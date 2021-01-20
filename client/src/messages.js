@@ -4,8 +4,8 @@ import { useRef, useEffect } from "react";
 import { socket } from "./socket";
 import ProfilePic from "./profilePic";
 
-export default function Chat() {
-    const chatMessages = useSelector((state) => state && state.chatMessages);
+export default function Messages() {
+    const chatMessages = useSelector((state) => state && state.privateMessages);
     const userId = useSelector((state) => state && state.idSelf);
     const elemRef = useRef("");
 
@@ -18,10 +18,8 @@ export default function Chat() {
     const handleKeyDown = (e) => {
         if (e.key === "Enter") {
             e.preventDefault();
-            if (e.target.value) {
-                socket.emit("post message", e.target.value);
-                e.target.value = null;
-            }
+            socket.emit("post message", e.target.value);
+            e.target.value = null;
         }
     };
 
@@ -31,7 +29,7 @@ export default function Chat() {
 
     return (
         <>
-            <h2 className="title">Public Chatroom</h2>
+            <h2 className="title">Chatroom</h2>
             <div className="outer-chat-container">
                 <ul className="chat-container" ref={elemRef}>
                     {chatMessages.map((message) => (

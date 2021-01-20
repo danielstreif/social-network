@@ -49,11 +49,11 @@ export default function FriendButton({ otherId }) {
             </button>
             {buttonText === "Accept" && (
                 <button
-                    className="friend-button"
+                    className="friend-button switch-button"
                     value="Decline"
                     onClick={handleClick}
                 >
-                    Decline Request
+                    Decline
                 </button>
             )}
         </>

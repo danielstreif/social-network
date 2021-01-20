@@ -4,13 +4,15 @@ import axios from "../axios";
 
 jest.mock("../axios");
 
+// mock wall posts to fix test
+
 axios.get.mockResolvedValue({
     data: {
         id: 1,
         first: "foo",
         last: "bar",
         url: "www.foobar.com",
-        bio: "Lorem ipsum"
+        bio: "Lorem ipsum",
     },
 });
 

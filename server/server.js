@@ -76,6 +76,37 @@ app.use(
     express.json()
 );
 
+app.post("/user/wall/post", uploader.single("image"), s3.upload, (req, res) => {
+    if (req.file) {
+        const id = req.session.userId;
+        const url = `${s3Url}${req.file.filename}`;
+        const description =
+            req.body.description != "undefined" ? req.body.description : null;
+        db.addWallPost(id, url, description)
+            .then(({ rows }) => {
+                res.json({ success: rows[0] });
+            })
+            .catch((err) => {
+                console.log("Wall post error: ", err);
+                res.json({ error: true });
+            });
+    } else {
+        res.json({ error: true });
+    }
+});
+
+app.get("/user/wall/:id", (req, res) => {
+    const { id } = req.params;
+    db.getWallPost(id)
+        .then(({ rows }) => {
+            res.json({ success: rows });
+        })
+        .catch((err) => {
+            console.log("Get wall posts error: ", err);
+            res.json({ error: true });
+        });
+});
+
 app.get("/friendships", (req, res) => {
     const userId = req.session.userId;
     fDb.getFriendships(userId)
@@ -211,10 +242,13 @@ app.get("/user/profile/:id", (req, res) => {
     if (id == req.session.userId) {
         return res.json({ invalid: true });
     }
+    if (id == "null") {
+        return res.json({ invalid: true });
+    }
     db.getUserInfo(id)
         .then(({ rows }) => {
             if (rows.length === 0) {
-                return res.json({ error: true });
+                return res.json({ invalid: true });
             } else {
                 return res.json(rows[0]);
             }
@@ -395,11 +429,20 @@ server.listen(process.env.PORT || 3001, function () {
     console.log("I'm listening.");
 });
 
+// let onlineUsers = {};
 io.on("connection", (socket) => {
-    if (!socket.request.session.userId) {
+    const userId = socket.request.session.userId;
+
+    if (!userId) {
         return socket.disconnect(true);
     }
-    const userId = socket.request.session.userId;
+
+    // onlineUsers[socket.id] = userId;
+
+    // socket.on("disconnect", () => {
+    //     delete onlineUsers[socket.id];
+    // });
+
     if (userId) {
         db.getRecentChat()
             .then(({ rows }) => {

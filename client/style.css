@@ -5,7 +5,7 @@
 
 body {
     background-color: ghostwhite;
-    font-family: SFProText-Semibold, Helvetica, Arial, sans-serif;
+    font-family: Helvetica Neue, Helvetica, Lucida Grande, Arial, sans-serif;
 }
 
 main {
@@ -43,11 +43,9 @@ header {
 }
 
 .logo {
-    height: 100%;
-    display: grid;
-    align-content: center;
     color: white !important;
     margin: 0 !important;
+    padding-top: 2px;
 }
 
 .mobile-menu {
@@ -110,7 +108,6 @@ header {
 
 .welcome-button {
     height: 43px;
-    width: auto;
     padding: 10px 15px 10px 15px;
     color: white;
 }
@@ -121,7 +118,7 @@ header {
 }
 
 .switch-button {
-    background-color: lightcoral;
+    background-color: lightcoral !important;
 }
 
 .error-message {
@@ -157,7 +154,7 @@ header {
 }
 
 .profile-pic {
-    border-radius: 50px;
+    border-radius: 50%;
     height: 100%;
     width: 100%;
     object-fit: cover;
@@ -169,17 +166,37 @@ header {
     cursor: pointer;
 }
 
-.bio-container {
+.profile-container {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 300px 1fr;
+}
+
+.profile-container-right {
+    padding-right: 10px;
+    max-width: 650px;
+    width: 100%;
+}
+
+.profile-container-right img {
+    margin-bottom: 5px;
+    width: 100%;
+}
+
+.post-container {
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 5px 12px rgba(0, 0, 0, 0.2);
+    background-color: white;
+    padding: 15px;
+    margin-bottom: 20px;
 }
 
 .bio-text {
-    width: 300px;
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 250px;
 }
 
 .bio-textarea {
-    width: 300px;
     height: 100px;
     font-family: inherit;
     font-size: medium;
@@ -190,8 +207,8 @@ header {
 }
 
 .bio-image {
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     margin-bottom: 10px;
 }
 
@@ -234,16 +251,16 @@ header {
     margin: 0;
     padding: 0 5px 0 5px;
     background-color: rgba(0, 0, 0, 0);
-    width: auto;
     color: darkgray;
 }
 
-.bio-button {
+.standard-button {
     margin-right: 10px;
     padding: 10px 15px 10px 15px;
     color: white;
     background-color: darkcyan;
-    width: 120px;
+    width: -moz-fit-content;
+    width: fit-content;
 }
 
 .header-button {
@@ -284,6 +301,7 @@ form {
     cursor: pointer;
     overflow: hidden;
     vertical-align: middle;
+    background-color: white;
 }
 
 .user-search {
@@ -317,10 +335,18 @@ form {
 }
 
 .friend-button {
+    width: -moz-fit-content;
+    width: fit-content;
     margin-right: 10px;
     padding: 10px 15px 10px 15px;
     color: white;
     background-color: darkcyan;
+}
+
+.friend-image {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 10px;
 }
 
 .outer-chat-container {
@@ -351,6 +377,7 @@ form {
     margin-bottom: 10px;
     overflow: scroll;
     scrollbar-width: none;
+    font-size: 15px;
 }
 
 .chat-user {
@@ -387,7 +414,7 @@ form {
     width: 500px;
     height: 100px;
     font-family: inherit;
-    font-size: medium;
+    font-size: 15px;
     border: none;
     border-radius: 8px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 5px 12px rgba(0, 0, 0, 0.2);
@@ -436,8 +463,11 @@ footer {
         padding: 0 20px 0 20px;
         margin: 0;
     }
-    .modal-box{
+    .modal-box {
         width: 80vw;
+    }
+    .profile-container {
+        grid-template-columns: 1fr;
     }
     .user-search-container {
         width: 300px;

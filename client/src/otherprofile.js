@@ -1,7 +1,9 @@
 import { Component } from "react";
+import { Link } from "react-router-dom";
 import axios from "./axios";
 import ProfilePic from "./profilePic";
 import FriendButton from "./friendButton";
+import Wall from "./wall";
 
 export default class OtherProfile extends Component {
     constructor(props) {
@@ -26,18 +28,26 @@ export default class OtherProfile extends Component {
     render() {
         return (
             <div className="profile-container">
-                <h2 className="title">
-                    {this.state.first} {this.state.last}
-                </h2>
-                <div className="bio-image">
-                    <ProfilePic
-                        first={this.state.first}
-                        last={this.state.last}
-                        url={this.state.url}
-                    />
+                <div className="profile-container-left">
+                    <h2 className="title">
+                        {this.state.first} {this.state.last}
+                    </h2>
+                    <div className="bio-image">
+                        <ProfilePic
+                            first={this.state.first}
+                            last={this.state.last}
+                            url={this.state.url}
+                        />
+                    </div>
+                    <p className="bio-text">{this.state.bio}</p>
+                    <FriendButton otherId={this.state.id} />
+                    <Link to="/messages">
+                        <button className="standard-button">Message</button>
+                    </Link>
                 </div>
-                <FriendButton otherId={this.state.id} />
-                <p className="bio-text">{this.state.bio}</p>
+                <div className="profile-container-right">
+                    <Wall edit={false} id={this.state.id} />
+                </div>
             </div>
         );
     }

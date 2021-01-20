@@ -1,4 +1,18 @@
 export default function reducer(state = {}, action) {
+    if (action.type == "GET_POSTS") {
+        state = {
+            ...state,
+            wallPosts: action.wallPosts,
+        };
+    }
+
+    if (action.type == "ADD_POST") {
+        state = {
+            ...state,
+            wallPosts: [action.newWallPost, ...state.wallPosts],
+        };
+    }
+
     if (action.type == "GET_MESSAGES") {
         state = {
             ...state,

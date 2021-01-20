@@ -46,9 +46,9 @@ export default class BioEditor extends Component {
     }
     emptyMode() {
         return (
-            <div>
+            <div className="bio-container">
                 <button
-                    className="bio-button add-button"
+                    className="standard-button add-button"
                     onClick={() => this.toggleTextarea()}
                 >
                     Add Bio
@@ -58,10 +58,10 @@ export default class BioEditor extends Component {
     }
     displayMode() {
         return (
-            <div>
+            <div className="bio-container">
                 <p className="bio-text">{this.props.bio}</p>
                 <button
-                    className="bio-button edit-button"
+                    className="standard-button edit-button"
                     onClick={() => this.toggleTextarea()}
                 >
                     Edit Bio
@@ -78,18 +78,20 @@ export default class BioEditor extends Component {
                     onChange={(e) => this.handleChange(e)}
                     value={this.state.draftBio}
                 />
-                <button
-                    className="bio-button save-button"
-                    onClick={() => this.handleUpload()}
-                >
-                    Save
-                </button>
-                <button
-                    className="bio-button"
-                    onClick={() => this.resetTextarea()}
-                >
-                    Close
-                </button>
+                <span>
+                    <button
+                        className="standard-button save-button"
+                        onClick={() => this.handleUpload()}
+                    >
+                        Save
+                    </button>
+                    <button
+                        className="standard-button switch-button"
+                        onClick={() => this.resetTextarea()}
+                    >
+                        Close
+                    </button>
+                </span>
             </div>
         );
     }

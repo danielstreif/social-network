@@ -170,3 +170,37 @@ module.exports.getNewMessage = (id) => {
         [id]
     );
 };
+
+module.exports.addWallPost = (id, url, description) => {
+    return db.query(
+        `INSERT INTO user_wall (user_id, url, description)
+        VALUES ($1, $2, $3)
+        RETURNING id, user_id, url, description, created_at`,
+        [id, url, description]
+    );
+};
+
+module.exports.addWallComment = (id, commentId, comment) => {
+    return db.query(
+        `INSERT INTO wall_comments (user_id, url, description)
+        VALUES ($1, $2, $3)`,
+        [id, commentId, comment]
+    );
+};
+
+module.exports.getWallPost = (id) => {
+    return db.query(
+        `SELECT * FROM user_wall
+        WHERE user_id = $1
+        ORDER BY id DESC`,
+        [id]
+    );
+};
+
+module.exports.getWallComment = (id) => {
+    return db.query(
+        `SELECT * FROM wall_comments
+        WHERE post_id = $1`,
+        [id]
+    );
+};

@@ -41,7 +41,7 @@ export default function FindPeople() {
                 {users.map((user) => (
                     <li className="user-container" key={user.id}>
                         <Link className="user-link" to={`/users/${user.id}`}>
-                            <div className="bio-image">
+                            <div className="friend-image">
                                 <ProfilePic
                                     first={user.first}
                                     last={user.last}

@@ -13,6 +13,7 @@ import FindPeople from "./findPeople";
 import Friends from "./friends";
 import Account from "./account";
 import Chat from "./chat";
+import Messages from "./messages";
 
 export default class App extends Component {
     constructor() {
@@ -79,6 +80,7 @@ export default class App extends Component {
                                 path="/"
                                 render={() => (
                                     <Profile
+                                        id={this.state.id}
                                         first={this.state.first}
                                         last={this.state.last}
                                         profilePic={this.profilePic()}
@@ -105,6 +107,11 @@ export default class App extends Component {
                             <Route path="/friends" render={() => <Friends />} />
 
                             <Route path="/chat" render={() => <Chat />} />
+
+                            <Route
+                                path="/messages"
+                                render={() => <Messages />}
+                            />
 
                             <Route
                                 path="/account"
