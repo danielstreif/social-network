@@ -512,6 +512,9 @@ footer {
     .modal-box {
         width: 80vw;
     }
+    .modal-img-box {
+    width: 90%;
+    }
     .profile-container {
         grid-template-columns: 1fr;
     }

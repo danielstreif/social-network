@@ -17,7 +17,7 @@ export default function Header(props) {
             <div className="navbar-box">
                 <button className="header-button">
                     <Link className="header-link" to="/users">
-                        Search
+                        Connect
                     </Link>
                 </button>
                 <button className="header-button">
@@ -58,7 +58,7 @@ export default function Header(props) {
                 <div className="navbar-menu">
                     <button className="header-button">
                         <Link className="header-link" to="/users">
-                            Search
+                            Connect
                         </Link>
                     </button>
                     <div className="navbar-image">{props.profilePic}</div>
