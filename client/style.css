@@ -299,7 +299,7 @@ header {
 
 .standard-button {
     margin-right: 10px;
-    padding: 8px 15px 8px 15px;
+    padding: 10px 15px 10px 15px;
     color: white;
     background-color: darkcyan;
     width: -moz-fit-content;
@@ -384,7 +384,7 @@ form {
     width: -moz-fit-content;
     width: fit-content;
     margin-right: 10px;
-    padding: 8px 15px 8px 15px;
+    padding: 10px 15px 10px 15px;
     color: white;
     background-color: darkcyan;
 }
@@ -514,6 +514,16 @@ footer {
     }
     .profile-container {
         grid-template-columns: 1fr;
+    }
+    .profile-container-left {
+        margin-bottom: 20px;
+    }
+    .profile-container-right {
+        max-height: 100%;
+        padding-left: 0;
+    }
+    .post-container {
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 0 0 rgba(0, 0, 0, 0.2);
     }
     .user-search-container {
         width: 300px;
