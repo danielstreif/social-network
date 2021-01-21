@@ -65,5 +65,6 @@ CREATE TABLE wall_comments(
 );
 
 INSERT INTO chat_messages (user_id, message) VALUES (100, 'Hey, how is everyone doing?'), (1, 'Good! Great weather today 🙂'), (3, 'Raining here 🙁');
+INSERT INTO private_messages (sender_id, recipient_id, message) VALUES (1, 2, 'Hey, how is everyone doing?'), (2, 1, 'Good! Great weather today 🙂'), (1, 2, 'Raining here 🙁');
 
 CREATE UNIQUE INDEX ON friendships (least(sender_id, recipient_id), greatest(sender_id, recipient_id));

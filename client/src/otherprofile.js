@@ -41,7 +41,7 @@ export default class OtherProfile extends Component {
                     </div>
                     <p className="bio-text standard-text">{this.state.bio}</p>
                     <FriendButton otherId={this.state.id} />
-                    <Link to="/messages">
+                    <Link to={`/messages/${this.state.id}`}>
                         <button className="standard-button">Message</button>
                     </Link>
                 </div>

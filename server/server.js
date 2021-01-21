@@ -10,6 +10,7 @@ const cryptoRandomString = require("crypto-random-string");
 const { hash, compare } = require("./bc");
 const db = require("./db/db");
 const fDb = require("./db/friendships");
+const cDb = require("./db/chat");
 const ses = require("./ses");
 const s3 = require("./s3");
 const { s3Url } = require("./config.json");
@@ -75,6 +76,46 @@ app.use(
     }),
     express.json()
 );
+
+app.get("/user/messages/:id", (req, res) => {
+    const userId = req.session.userId;
+    const { id } = req.params;
+    cDb.getPrivateChat(userId, id)
+        .then(({ rows }) => {
+            for (let i in rows) {
+                rows[i].time = rows[i].created_at.toLocaleString();
+            }
+            const result = {
+                success: rows.sort((a, b) => {
+                    return a.id - b.id;
+                }),
+            };
+            res.json(result);
+        })
+        .catch((err) => {
+            console.log("Get private chat error: ", err);
+            res.json({ error: true });
+        });
+});
+
+app.post("/user/message", (req, res) => {
+    const userId = req.session.userId;
+    const { otherId, message } = req.body;
+    cDb.addPrivateMessage(userId, otherId, message)
+        .then(({ rows }) => {
+            cDb.getNewPrivateMessage(rows[0].id)
+                .then(({ rows }) => {
+                    const newMessage = rows[0];
+                    newMessage.time = newMessage.created_at.toLocaleString();
+                    res.json({ success: newMessage });
+                })
+                .catch((err) => console.log("Get new message error: ", err));
+        })
+        .catch((err) => {
+            console.log("Send private message error: ", err);
+            res.json({ error: true });
+        });
+});
 
 app.post("/user/wall/post", uploader.single("image"), s3.upload, (req, res) => {
     if (req.file) {
@@ -437,7 +478,6 @@ server.listen(process.env.PORT || 3001, function () {
     console.log("I'm listening.");
 });
 
-// let onlineUsers = {};
 io.on("connection", (socket) => {
     const userId = socket.request.session.userId;
 
@@ -445,14 +485,8 @@ io.on("connection", (socket) => {
         return socket.disconnect(true);
     }
 
-    // onlineUsers[socket.id] = userId;
-
-    // socket.on("disconnect", () => {
-    //     delete onlineUsers[socket.id];
-    // });
-
     if (userId) {
-        db.getRecentChat()
+        cDb.getRecentChat()
             .then(({ rows }) => {
                 for (let i in rows) {
                     rows[i].time = rows[i].created_at.toLocaleString();
@@ -468,9 +502,9 @@ io.on("connection", (socket) => {
     }
 
     socket.on("post message", (message) => {
-        db.addChatMessage(userId, message)
+        cDb.addChatMessage(userId, message)
             .then(({ rows }) => {
-                db.getNewMessage(rows[0].id)
+                cDb.getNewMessage(rows[0].id)
                     .then(({ rows }) => {
                         const newMessage = rows[0];
                         newMessage.time = newMessage.created_at.toLocaleString();

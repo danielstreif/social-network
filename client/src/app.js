@@ -109,8 +109,14 @@ export default class App extends Component {
                             <Route path="/chat" render={() => <Chat />} />
 
                             <Route
-                                path="/messages"
-                                render={() => <Messages />}
+                                path="/messages/:id"
+                                render={(props) => (
+                                    <Messages
+                                        key={props.match.url}
+                                        match={props.match}
+                                        history={props.history}
+                                    />
+                                )}
                             />
 
                             <Route

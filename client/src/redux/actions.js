@@ -16,6 +16,25 @@ export async function addWallPost(formData) {
     };
 }
 
+export async function getPrivateMessages(id) {
+    const { data } = await axios.get(`/user/messages/${id}`);
+    return {
+        type: "GET_PRIVATE_MESSAGES",
+        privateMessages: data.success,
+    };
+}
+
+export async function sendPrivateMessage(message, id) {
+    const { data } = await axios.post("/user/message", {
+        message: message,
+        otherId: id,
+    });
+    return {
+        type: "SEND_PRIVATE_MESSAGE",
+        sentPrivateMessage: data.success,
+    };
+}
+
 export function getMessages({ result }, id) {
     return {
         type: "GET_MESSAGES",

@@ -1,13 +1,19 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useRef, useEffect } from "react";
-import { socket } from "./socket";
 import ProfilePic from "./profilePic";
+import { getPrivateMessages, sendPrivateMessage } from "./redux/actions";
 
-export default function Messages() {
+export default function Messages(props) {
+    const dispatch = useDispatch();
     const chatMessages = useSelector((state) => state && state.privateMessages);
     const userId = useSelector((state) => state && state.idSelf);
     const elemRef = useRef("");
+    const otherId = props.match.params.id;
+
+    useEffect(() => {
+        dispatch(getPrivateMessages(otherId));
+    }, []);
 
     useEffect(() => {
         if (elemRef.current) {
@@ -18,7 +24,7 @@ export default function Messages() {
     const handleKeyDown = (e) => {
         if (e.key === "Enter") {
             e.preventDefault();
-            socket.emit("post message", e.target.value);
+            dispatch(sendPrivateMessage(e.target.value, otherId));
             e.target.value = null;
         }
     };
@@ -29,7 +35,7 @@ export default function Messages() {
 
     return (
         <>
-            <h2 className="title">Chatroom</h2>
+            <h2 className="title">Private Chatroom</h2>
             <div className="outer-chat-container">
                 <ul className="chat-container" ref={elemRef}>
                     {chatMessages.map((message) => (
@@ -85,6 +91,9 @@ export default function Messages() {
                 onKeyDown={handleKeyDown}
                 placeholder="Compose Message"
             />
+            <Link className="chat-user" to={`/users/${otherId}`}>
+                <button className="standard-button">Back</button>
+            </Link>
         </>
     );
 }
